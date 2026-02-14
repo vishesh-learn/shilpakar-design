@@ -20,6 +20,7 @@ import PostJob from "./pages/client/PostJob";
 import WorkerList from "./pages/client/WorkerList";
 import WorkerProfileView from "./pages/client/WorkerProfileView";
 import RateWorker from "./pages/client/RateWorker";
+import ClientProfile from "./pages/client/ClientProfile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -48,6 +49,7 @@ const App = () => (
           <Route path="/client/workers" element={<WorkerList />} />
           <Route path="/client/worker/:id" element={<WorkerProfileView />} />
           <Route path="/client/rate-worker" element={<RateWorker />} />
+          <Route path="/client/profile" element={<ClientProfile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
