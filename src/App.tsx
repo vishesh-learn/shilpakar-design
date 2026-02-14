@@ -21,6 +21,13 @@ import WorkerList from "./pages/client/WorkerList";
 import WorkerProfileView from "./pages/client/WorkerProfileView";
 import RateWorker from "./pages/client/RateWorker";
 import ClientProfile from "./pages/client/ClientProfile";
+import AdminLayout from "./components/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminWorkers from "./pages/admin/AdminWorkers";
+import AdminClients from "./pages/admin/AdminClients";
+import AdminJobs from "./pages/admin/AdminJobs";
+import AdminRevenue from "./pages/admin/AdminRevenue";
+import AdminReports from "./pages/admin/AdminReports";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +57,14 @@ const App = () => (
           <Route path="/client/worker/:id" element={<WorkerProfileView />} />
           <Route path="/client/rate-worker" element={<RateWorker />} />
           <Route path="/client/profile" element={<ClientProfile />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="workers" element={<AdminWorkers />} />
+            <Route path="clients" element={<AdminClients />} />
+            <Route path="jobs" element={<AdminJobs />} />
+            <Route path="revenue" element={<AdminRevenue />} />
+            <Route path="reports" element={<AdminReports />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
