@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppButton from "@/components/AppButton";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Phone, ArrowLeft } from "lucide-react";
 
 const LoginScreen: React.FC = () => {
@@ -33,13 +34,16 @@ const LoginScreen: React.FC = () => {
 
   return (
     <div className="mobile-container bg-background flex flex-col min-h-screen px-6 py-12">
-      <button
-        onClick={() => navigate("/language")}
-        className="self-start flex items-center gap-1 text-primary text-sm font-medium mb-4"
-      >
-        <ArrowLeft size={18} />
-        Back
-      </button>
+      <div className="flex items-center justify-between mb-4">
+        <button
+          onClick={() => navigate("/language")}
+          className="flex items-center gap-1 text-primary text-sm font-medium"
+        >
+          <ArrowLeft size={18} />
+          Back
+        </button>
+        <LanguageSwitcher />
+      </div>
       <div className="flex-1 flex flex-col items-center justify-center animate-fade-in">
         <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center mb-6">
           <Phone className="text-primary" size={32} />
