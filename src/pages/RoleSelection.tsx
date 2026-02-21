@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import AppCard from "@/components/AppCard";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Wrench, Building2 } from "lucide-react";
 
 const RoleSelection: React.FC = () => {
@@ -8,6 +9,9 @@ const RoleSelection: React.FC = () => {
 
   return (
     <div className="mobile-container bg-background flex flex-col min-h-screen px-6 py-12">
+      <div className="flex justify-end">
+        <LanguageSwitcher />
+      </div>
       <div className="flex-1 flex flex-col items-center justify-center animate-fade-in">
         <h1 className="text-2xl font-bold text-foreground mb-2">Who are you?</h1>
         <p className="text-muted-foreground text-sm mb-10">Select your role to continue</p>

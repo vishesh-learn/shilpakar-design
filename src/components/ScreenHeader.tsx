@@ -1,14 +1,16 @@
 import React from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 interface ScreenHeaderProps {
   title: string;
   showBack?: boolean;
   rightAction?: React.ReactNode;
+  showLanguage?: boolean;
 }
 
-const ScreenHeader: React.FC<ScreenHeaderProps> = ({ title, showBack = true, rightAction }) => {
+const ScreenHeader: React.FC<ScreenHeaderProps> = ({ title, showBack = true, rightAction, showLanguage = true }) => {
   const navigate = useNavigate();
 
   return (
@@ -21,7 +23,10 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = ({ title, showBack = true, rig
         )}
         <h1 className="text-lg font-bold text-foreground">{title}</h1>
       </div>
-      {rightAction}
+      <div className="flex items-center gap-2">
+        {showLanguage && <LanguageSwitcher />}
+        {rightAction}
+      </div>
     </div>
   );
 };
