@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
@@ -6,6 +7,12 @@ import BottomNav from "@/components/BottomNav";
 import { User, MapPin, Star, Hammer, Phone, LogOut } from "lucide-react";
 
 const WorkerProfile: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("userRole");
+    navigate("/login");
+  };
   return (
     <div className="mobile-container bg-background min-h-screen pb-24">
       <ScreenHeader title="Profile" showBack={false} />
@@ -70,7 +77,7 @@ const WorkerProfile: React.FC = () => {
         </AppCard>
 
         <AppButton variant="outline">Edit Profile</AppButton>
-        <AppButton variant="ghost" className="text-destructive">
+        <AppButton variant="ghost" className="text-destructive" onClick={handleLogout}>
           <LogOut size={18} /> Logout
         </AppButton>
       </div>
