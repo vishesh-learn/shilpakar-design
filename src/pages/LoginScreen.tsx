@@ -1,29 +1,45 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppButton from "@/components/AppButton";
-import { Phone } from "lucide-react";
+import { Phone, ArrowLeft } from "lucide-react";
 
 const LoginScreen: React.FC = () => {
   const navigate = useNavigate();
   const [phone, setPhone] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
+  const [isNewUser, setIsNewUser] = useState(false);
 
   const handleSendOtp = () => {
     if (phone.length >= 10) setOtpSent(true);
   };
 
   const handleVerify = () => {
-    if (otp.length === 4) navigate("/role");
+    if (otp.length === 4) {
+      if (isNewUser) {
+        navigate("/role");
+      } else {
+        navigate("/worker/dashboard");
+      }
+    }
   };
 
   return (
     <div className="mobile-container bg-background flex flex-col min-h-screen px-6 py-12">
+      <button
+        onClick={() => navigate("/language")}
+        className="self-start flex items-center gap-1 text-primary text-sm font-medium mb-4"
+      >
+        <ArrowLeft size={18} />
+        Back
+      </button>
       <div className="flex-1 flex flex-col items-center justify-center animate-fade-in">
         <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center mb-6">
           <Phone className="text-primary" size={32} />
         </div>
-        <h1 className="text-2xl font-bold text-foreground mb-2">Login</h1>
+        <h1 className="text-2xl font-bold text-foreground mb-2">
+          {isNewUser ? "Create Account" : "Login"}
+        </h1>
         <p className="text-muted-foreground text-sm mb-10">Enter your phone number</p>
 
         {!otpSent ? (
@@ -78,6 +94,15 @@ const LoginScreen: React.FC = () => {
             </button>
           </div>
         )}
+
+        <div className="mt-8">
+          <button
+            onClick={() => { setIsNewUser(!isNewUser); setOtpSent(false); setOtp(""); setPhone(""); }}
+            className="text-primary text-sm font-medium"
+          >
+            {isNewUser ? "Already have an account? Login" : "New user? Create Account"}
+          </button>
+        </div>
       </div>
     </div>
   );
