@@ -82,7 +82,7 @@ const WorkerSetup: React.FC = () => {
 
       <div className="px-5 pb-8">
         <AppButton
-          onClick={() => navigate("/worker/dashboard")}
+          onClick={() => { localStorage.setItem("userRole", "worker"); navigate("/worker/dashboard"); }}
           disabled={!name || !location || selectedSkills.length === 0}
         >
           Complete Setup

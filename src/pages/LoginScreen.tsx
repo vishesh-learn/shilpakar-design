@@ -19,7 +19,14 @@ const LoginScreen: React.FC = () => {
       if (isNewUser) {
         navigate("/role");
       } else {
-        navigate("/worker/dashboard");
+        const savedRole = localStorage.getItem("userRole");
+        if (savedRole === "client") {
+          navigate("/client/dashboard");
+        } else if (savedRole === "worker") {
+          navigate("/worker/dashboard");
+        } else {
+          navigate("/role");
+        }
       }
     }
   };
