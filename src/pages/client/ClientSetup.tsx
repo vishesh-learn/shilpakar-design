@@ -49,7 +49,7 @@ const ClientSetup: React.FC = () => {
       </div>
 
       <div className="px-5 pb-8">
-        <AppButton onClick={() => navigate("/client/dashboard")} disabled={!name || !location}>
+        <AppButton onClick={() => { localStorage.setItem("userRole", "client"); navigate("/client/dashboard"); }} disabled={!name || !location}>
           Complete Setup
         </AppButton>
       </div>
