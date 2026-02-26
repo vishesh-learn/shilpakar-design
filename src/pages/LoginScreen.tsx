@@ -9,25 +9,19 @@ const LoginScreen: React.FC = () => {
   const [phone, setPhone] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
-  const [isNewUser, setIsNewUser] = useState(false);
-
   const handleSendOtp = () => {
     if (phone.length >= 10) setOtpSent(true);
   };
 
   const handleVerify = () => {
     if (otp.length === 4) {
-      if (isNewUser) {
-        navigate("/role");
+      const savedRole = localStorage.getItem("userRole");
+      if (savedRole === "client") {
+        navigate("/client/dashboard");
+      } else if (savedRole === "worker") {
+        navigate("/worker/dashboard");
       } else {
-        const savedRole = localStorage.getItem("userRole");
-        if (savedRole === "client") {
-          navigate("/client/dashboard");
-        } else if (savedRole === "worker") {
-          navigate("/worker/dashboard");
-        } else {
-          navigate("/role");
-        }
+        navigate("/role");
       }
     }
   };
@@ -49,7 +43,7 @@ const LoginScreen: React.FC = () => {
           <Phone className="text-primary" size={32} />
         </div>
         <h1 className="text-2xl font-bold text-foreground mb-2">
-          {isNewUser ? "Create Account" : "Login"}
+          Continue with Phone
         </h1>
         <p className="text-muted-foreground text-sm mb-10">Enter your phone number</p>
 
@@ -106,14 +100,6 @@ const LoginScreen: React.FC = () => {
           </div>
         )}
 
-        <div className="mt-8">
-          <button
-            onClick={() => { setIsNewUser(!isNewUser); setOtpSent(false); setOtp(""); setPhone(""); }}
-            className="text-primary text-sm font-medium"
-          >
-            {isNewUser ? "Already have an account? Login" : "New user? Create Account"}
-          </button>
-        </div>
       </div>
     </div>
   );
