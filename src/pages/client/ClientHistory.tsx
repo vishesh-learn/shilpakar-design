@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+
 import BottomNav from "@/components/BottomNav";
 import AppCard from "@/components/AppCard";
 import ScreenHeader from "@/components/ScreenHeader";
@@ -13,11 +13,9 @@ const pastJobs = [
 ];
 
 const ClientHistory: React.FC = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="mobile-container bg-background min-h-screen pb-24">
-      <ScreenHeader title="Job History" onBack={() => navigate("/client/dashboard")} />
+      <ScreenHeader title="Job History" />
       <div className="px-5 pt-4 space-y-3 animate-fade-in">
         {pastJobs.map((job) => (
           <AppCard key={job.id} className="space-y-2">

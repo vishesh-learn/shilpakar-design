@@ -21,6 +21,8 @@ import WorkerList from "./pages/client/WorkerList";
 import WorkerProfileView from "./pages/client/WorkerProfileView";
 import RateWorker from "./pages/client/RateWorker";
 import ClientProfile from "./pages/client/ClientProfile";
+import ClientActiveJobs from "./pages/client/ClientActiveJobs";
+import ClientHistory from "./pages/client/ClientHistory";
 import AdminLayout from "./components/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminWorkers from "./pages/admin/AdminWorkers";
@@ -58,6 +60,8 @@ const App = () => (
           <Route path="/client/worker/:id" element={<WorkerProfileView />} />
           <Route path="/client/rate-worker" element={<RateWorker />} />
           <Route path="/client/profile" element={<ClientProfile />} />
+          <Route path="/client/active-jobs" element={<ClientActiveJobs />} />
+          <Route path="/client/history" element={<ClientHistory />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="workers" element={<AdminWorkers />} />
