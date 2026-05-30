@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Navigation, X, ChevronDown, ChevronUp } from "lucide-react";
 
 const screens: { group: string; items: { label: string; path: string }[] }[] = [
   {
@@ -50,69 +49,46 @@ const screens: { group: string; items: { label: string; path: string }[] }[] = [
 ];
 
 const ScreenNavigator: React.FC = () => {
-  const [open, setOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const navigate = useNavigate();
   const location = useLocation();
 
-  const go = (path: string) => {
-    navigate(path);
-    setOpen(false);
-  };
+  // Hide on admin routes (they have their own sidebar)
+  if (location.pathname.startsWith("/admin")) return null;
 
   return (
-    <>
-      <button
-        onClick={() => setOpen(!open)}
-        className="fixed bottom-24 right-4 z-[100] w-12 h-12 rounded-full bg-foreground text-background shadow-lg flex items-center justify-center hover:scale-105 transition-transform"
-        title="Screen Navigator (Dev)"
-      >
-        {open ? <X size={20} /> : <Navigation size={20} />}
-      </button>
-
-      {open && (
-        <div className="fixed bottom-40 right-4 z-[100] w-72 max-h-[70vh] overflow-y-auto bg-card border border-border rounded-2xl shadow-2xl p-3 animate-fade-in">
-          <div className="px-2 pb-2 mb-2 border-b border-border">
-            <p className="text-xs font-bold text-muted-foreground uppercase">Dev · Screen Navigator</p>
-            <p className="text-xs text-muted-foreground truncate">{location.pathname}</p>
+    <aside className="hidden md:flex fixed top-0 left-0 h-screen w-60 bg-card border-r border-border z-[100] flex-col overflow-y-auto">
+      <div className="px-4 py-3 border-b border-border sticky top-0 bg-card">
+        <p className="text-xs font-bold text-foreground uppercase tracking-wide">Dev Navigator</p>
+        <p className="text-[10px] text-muted-foreground truncate mt-0.5">{location.pathname}</p>
+      </div>
+      <div className="p-2">
+        {screens.map((g) => (
+          <div key={g.group} className="mb-3">
+            <p className="px-2 py-1 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+              {g.group}
+            </p>
+            <div className="space-y-0.5">
+              {g.items.map((it) => {
+                const active = location.pathname === it.path;
+                return (
+                  <button
+                    key={it.path}
+                    onClick={() => navigate(it.path)}
+                    className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition-colors ${
+                      active
+                        ? "bg-primary text-primary-foreground font-semibold"
+                        : "text-foreground hover:bg-accent"
+                    }`}
+                  >
+                    {it.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-          {screens.map((g) => {
-            const isCollapsed = collapsed[g.group];
-            return (
-              <div key={g.group} className="mb-2">
-                <button
-                  onClick={() => setCollapsed({ ...collapsed, [g.group]: !isCollapsed })}
-                  className="w-full flex items-center justify-between px-2 py-1 text-xs font-bold text-foreground uppercase tracking-wide"
-                >
-                  {g.group}
-                  {isCollapsed ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
-                </button>
-                {!isCollapsed && (
-                  <div className="space-y-1 mt-1">
-                    {g.items.map((it) => {
-                      const active = location.pathname === it.path;
-                      return (
-                        <button
-                          key={it.path}
-                          onClick={() => go(it.path)}
-                          className={`w-full text-left px-3 py-1.5 rounded-lg text-sm transition-colors ${
-                            active
-                              ? "bg-primary text-primary-foreground font-semibold"
-                              : "text-foreground hover:bg-accent"
-                          }`}
-                        >
-                          {it.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </>
+        ))}
+      </div>
+    </aside>
   );
 };
 
