@@ -10,8 +10,8 @@ const ClientDashboard: React.FC = () => {
   const cards = [
     { icon: PlusCircle, label: "Post Job", desc: "Create a new job", path: "/client/post-job", color: "text-primary" },
     { icon: Users, label: "Find Workers", desc: "Browse workers", path: "/client/workers", color: "text-success" },
-    { icon: Briefcase, label: "Active Jobs", desc: "2 in progress", path: "#", color: "text-warning" },
-    { icon: Clock, label: "History", desc: "Past jobs", path: "#", color: "text-muted-foreground" },
+    { icon: Briefcase, label: "Active Jobs", desc: "2 in progress", path: "/client/active-jobs", color: "text-warning" },
+    { icon: Clock, label: "History", desc: "Past jobs", path: "/client/history", color: "text-muted-foreground" },
   ];
 
   return (
