@@ -29,6 +29,7 @@ import AdminJobs from "./pages/admin/AdminJobs";
 import AdminRevenue from "./pages/admin/AdminRevenue";
 import AdminReports from "./pages/admin/AdminReports";
 import NotFound from "./pages/NotFound";
+import ScreenNavigator from "./components/ScreenNavigator";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +68,7 @@ const App = () => (
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <ScreenNavigator />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
