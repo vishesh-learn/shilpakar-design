@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Home, Briefcase, Wallet, User } from "lucide-react";
+import { Home, Briefcase, Wallet, User, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface BottomNavProps {
@@ -21,6 +21,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ type }) => {
   const clientTabs = [
     { icon: Home, label: "Home", path: "/client/dashboard" },
     { icon: Briefcase, label: "Post Job", path: "/client/post-job" },
+    { icon: Users, label: "Workers", path: "/client/workers" },
     { icon: User, label: "Profile", path: "/client/profile" },
   ];
 
