@@ -21,6 +21,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ type }) => {
   const clientTabs = [
     { icon: Home, label: "Home", path: "/client/dashboard" },
     { icon: Briefcase, label: "Post Job", path: "/client/post-job" },
+    { icon: Users, label: "Workers", path: "/client/workers" },
     { icon: User, label: "Profile", path: "/client/profile" },
   ];
 
