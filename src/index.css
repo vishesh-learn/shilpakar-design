@@ -80,7 +80,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans md:pl-60;
+    @apply text-foreground font-sans md:pl-60 bg-background md:bg-slate-900;
     font-family: 'Poppins', sans-serif;
   }
 }
