@@ -87,6 +87,6 @@
 
 @layer utilities {
   .mobile-container {
-    @apply max-w-[390px] mx-auto min-h-screen relative;
+    @apply max-w-[390px] mx-auto min-h-screen relative bg-background md:border-x md:border-border md:shadow-xl;
   }
 }
