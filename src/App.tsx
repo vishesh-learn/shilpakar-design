@@ -21,6 +21,7 @@ import WorkerList from "./pages/client/WorkerList";
 import WorkerProfileView from "./pages/client/WorkerProfileView";
 import RateWorker from "./pages/client/RateWorker";
 import ClientProfile from "./pages/client/ClientProfile";
+import ClientEditProfile from "./pages/client/ClientEditProfile";
 import ClientActiveJobs from "./pages/client/ClientActiveJobs";
 import ClientHistory from "./pages/client/ClientHistory";
 import AdminLayout from "./components/AdminLayout";
