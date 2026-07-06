@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
+import BottomNav from "@/components/BottomNav";
 import { Star, MapPin } from "lucide-react";
 
 const workers = [
