@@ -40,6 +40,7 @@ const WorkerList: React.FC = () => {
           </AppCard>
         ))}
       </div>
+      <BottomNav type="client" />
     </div>
   );
 };
