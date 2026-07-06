@@ -61,6 +61,7 @@ const App = () => (
           <Route path="/client/worker/:id" element={<WorkerProfileView />} />
           <Route path="/client/rate-worker" element={<RateWorker />} />
           <Route path="/client/profile" element={<ClientProfile />} />
+          <Route path="/client/edit-profile" element={<ClientEditProfile />} />
           <Route path="/client/active-jobs" element={<ClientActiveJobs />} />
           <Route path="/client/history" element={<ClientHistory />} />
           <Route path="/admin" element={<AdminLayout />}>
