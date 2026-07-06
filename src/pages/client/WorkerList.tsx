@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
+import BottomNav from "@/components/BottomNav";
 import { Star, MapPin } from "lucide-react";
 
 const workers = [
@@ -17,7 +18,8 @@ const WorkerList: React.FC = () => {
 
   return (
     <div className="mobile-container bg-background min-h-screen pb-24">
-      <ScreenHeader title="Workers Nearby" />
+      <ScreenHeader title="Workers Nearby" showBack={false} />
+
       <div className="px-5 py-4 space-y-3 animate-fade-in">
         {workers.map((w) => (
           <AppCard key={w.id} onClick={() => navigate(`/client/worker/${w.id}`)}>
@@ -38,6 +40,7 @@ const WorkerList: React.FC = () => {
           </AppCard>
         ))}
       </div>
+      <BottomNav type="client" />
     </div>
   );
 };
