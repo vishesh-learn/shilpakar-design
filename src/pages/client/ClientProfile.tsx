@@ -61,7 +61,7 @@ const ClientProfile: React.FC = () => {
           </div>
         </AppCard>
 
-        <AppButton variant="outline" onClick={() => navigate("/client/setup")}>Edit Profile</AppButton>
+        <AppButton variant="outline" onClick={() => navigate("/client/edit-profile")}>Edit Profile</AppButton>
         <AppButton variant="ghost" className="text-destructive" onClick={handleLogout}>
           <LogOut size={18} /> Logout
         </AppButton>
