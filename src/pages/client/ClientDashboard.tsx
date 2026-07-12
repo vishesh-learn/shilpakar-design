@@ -80,7 +80,7 @@ const ClientDashboard: React.FC = () => {
           </div>
           <div className="space-y-3">
             {historyPreview.map((job) => (
-              <AppCard key={job.id} onClick={() => navigate("/client/history")} className="space-y-2">
+              <AppCard key={job.id} onClick={() => navigate(`/client/history/${job.id}`)} className="space-y-2">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-11 h-11 rounded-2xl bg-success/10 flex items-center justify-center">
