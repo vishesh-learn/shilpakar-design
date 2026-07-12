@@ -45,7 +45,7 @@ const ClientDashboard: React.FC = () => {
           </div>
           <div className="space-y-3">
             {activeJobsPreview.map((job) => (
-              <AppCard key={job.id} onClick={() => navigate("/client/active-jobs")} className="space-y-2">
+              <AppCard key={job.id} onClick={() => navigate(`/client/active-job/${job.id}`)} className="space-y-2">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-11 h-11 rounded-2xl bg-accent flex items-center justify-center">
