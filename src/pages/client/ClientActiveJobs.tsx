@@ -34,9 +34,6 @@ const ClientActiveJobs: React.FC = () => {
       <div className="px-5 pt-4 space-y-3 animate-fade-in">
         {activeJobs.map((job) => (
           <AppCard key={job.id} onClick={() => navigate(`/client/active-job/${job.id}`)} className="space-y-3">
-      <div className="px-5 pt-4 space-y-3 animate-fade-in">
-        {activeJobs.map((job) => (
-          <AppCard key={job.id} className="space-y-3">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-accent flex items-center justify-center">
