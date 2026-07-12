@@ -27,9 +27,13 @@ const activeJobs = [
 ];
 
 const ClientActiveJobs: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="mobile-container bg-background min-h-screen pb-24">
       <ScreenHeader title="Active Jobs" />
+      <div className="px-5 pt-4 space-y-3 animate-fade-in">
+        {activeJobs.map((job) => (
+          <AppCard key={job.id} onClick={() => navigate(`/client/active-job/${job.id}`)} className="space-y-3">
       <div className="px-5 pt-4 space-y-3 animate-fade-in">
         {activeJobs.map((job) => (
           <AppCard key={job.id} className="space-y-3">
