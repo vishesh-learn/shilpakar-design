@@ -64,6 +64,7 @@ const App = () => (
           <Route path="/client/profile" element={<ClientProfile />} />
           <Route path="/client/edit-profile" element={<ClientEditProfile />} />
           <Route path="/client/active-jobs" element={<ClientActiveJobs />} />
+          <Route path="/client/active-job/:id" element={<ClientJobDetails />} />
           <Route path="/client/history" element={<ClientHistory />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
