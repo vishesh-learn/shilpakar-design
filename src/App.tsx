@@ -24,6 +24,7 @@ import ClientProfile from "./pages/client/ClientProfile";
 import ClientEditProfile from "./pages/client/ClientEditProfile";
 import ClientActiveJobs from "./pages/client/ClientActiveJobs";
 import ClientHistory from "./pages/client/ClientHistory";
+import ClientJobDetails from "./pages/client/ClientJobDetails";
 import AdminLayout from "./components/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminWorkers from "./pages/admin/AdminWorkers";
