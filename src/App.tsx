@@ -24,6 +24,7 @@ import ClientProfile from "./pages/client/ClientProfile";
 import ClientEditProfile from "./pages/client/ClientEditProfile";
 import ClientActiveJobs from "./pages/client/ClientActiveJobs";
 import ClientHistory from "./pages/client/ClientHistory";
+import ClientHistoryDetails from "./pages/client/ClientHistoryDetails";
 import ClientJobDetails from "./pages/client/ClientJobDetails";
 import AdminLayout from "./components/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -66,6 +67,7 @@ const App = () => (
           <Route path="/client/active-jobs" element={<ClientActiveJobs />} />
           <Route path="/client/active-job/:id" element={<ClientJobDetails />} />
           <Route path="/client/history" element={<ClientHistory />} />
+          <Route path="/client/history/:id" element={<ClientHistoryDetails />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="workers" element={<AdminWorkers />} />
