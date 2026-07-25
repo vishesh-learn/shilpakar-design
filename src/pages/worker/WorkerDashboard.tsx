@@ -25,6 +25,27 @@ const newJobs = [
   { id: 6, title: "Kitchen Tiles", client: "Amit Shah", location: "Borivali", wage: "₹850/day", time: "3 days ago", type: "Mason" },
 ];
 
+const StarRating = ({ rating, size = 14 }: { rating: number; size?: number }) => {
+  return (
+    <div className="flex items-center">
+      {[1, 2, 3, 4, 5].map((star) => {
+        const fill = Math.max(0, Math.min(1, rating - (star - 1)));
+        return (
+          <div key={star} className="relative">
+            <Star size={size} className="text-primary-foreground/30" />
+            <div
+              className="absolute inset-0 overflow-hidden"
+              style={{ width: `${fill * 100}%` }}
+            >
+              <Star size={size} className="fill-warning text-warning" />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const WorkerDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [available, setAvailable] = useState(true);
@@ -39,8 +60,7 @@ const WorkerDashboard: React.FC = () => {
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-foreground/20 text-primary-foreground">
-              <Star size={16} className="fill-warning text-warning" />
-              <span className="font-bold text-sm">4.5</span>
+              <StarRating rating={4.5} size={14} />
             </div>
             <div className="w-12 h-12 rounded-full bg-primary-foreground/20 flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-lg">RK</span>
