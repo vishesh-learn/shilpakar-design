@@ -53,18 +53,18 @@ const WorkerDashboard: React.FC = () => {
   return (
     <div className="mobile-container bg-background min-h-screen pb-24">
       <div className="bg-primary px-5 pt-12 pb-8 rounded-b-3xl">
-        <div className="flex items-center justify-between mb-6">
-          <div>
+        <div className="flex items-start justify-between mb-6 gap-4">
+          <div className="flex-1 min-w-0">
             <p className="text-primary-foreground/70 text-sm">Welcome back</p>
-            <h1 className="text-2xl font-bold text-primary-foreground">Ramesh Kumar</h1>
+            <h1 className="text-2xl font-bold text-primary-foreground mt-0.5">Ramesh Kumar</h1>
+            <div className="flex items-center gap-2 mt-2">
+              <StarRating rating={4.5} size={16} />
+              <span className="text-primary-foreground/90 text-sm font-medium">4.5</span>
+              <span className="text-primary-foreground/60 text-sm">(23 reviews)</span>
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-foreground/20 text-primary-foreground">
-              <StarRating rating={4.5} size={14} />
-            </div>
-            <div className="w-12 h-12 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">RK</span>
-            </div>
+          <div className="w-14 h-14 rounded-full bg-primary-foreground/20 flex items-center justify-center shrink-0">
+            <span className="text-primary-foreground font-bold text-xl">RK</span>
           </div>
         </div>
 
