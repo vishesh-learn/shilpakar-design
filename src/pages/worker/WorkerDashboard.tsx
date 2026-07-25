@@ -60,8 +60,7 @@ const WorkerDashboard: React.FC = () => {
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-foreground/20 text-primary-foreground">
-              <Star size={16} className="fill-warning text-warning" />
-              <span className="font-bold text-sm">4.5</span>
+              <StarRating rating={4.5} size={14} />
             </div>
             <div className="w-12 h-12 rounded-full bg-primary-foreground/20 flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-lg">RK</span>
