@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import BottomNav from "@/components/BottomNav";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
-import { Star, MapPin, Clock, CheckCircle, ToggleLeft, ToggleRight, ChevronRight, IndianRupee } from "lucide-react";
+import { Star, MapPin, Clock, CheckCircle, ChevronRight, IndianRupee } from "lucide-react";
 
 const activeJob = {
   id: "1",
