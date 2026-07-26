@@ -75,13 +75,19 @@ const WorkerDashboard: React.FC = () => {
               {available ? "You are visible to clients" : "You are hidden"}
             </p>
           </div>
-          <button onClick={() => setAvailable(!available)}>
-            {available ? (
-              <ToggleRight className="text-success" size={40} />
-            ) : (
-              <ToggleLeft className="text-primary-foreground/50" size={40} />
-            )}
-          </button>
+          <label className="relative inline-flex items-center cursor-pointer select-none group focus-within:outline-none">
+            <input
+              type="checkbox"
+              className="sr-only peer"
+              checked={available}
+              onChange={() => setAvailable(!available)}
+            />
+            <div className="w-16 h-9 bg-primary-foreground/30 rounded-full transition-all duration-300 ease-in-out peer-checked:bg-success shadow-[inset_0_2px_4px_rgba(0,0,0,0.08)] group-hover:opacity-90"></div>
+            <div className="absolute left-1 top-1 w-7 h-7 bg-primary-foreground rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] shadow-[0_2px_10px_rgba(0,0,0,0.12),0_1px_2px_rgba(0,0,0,0.05)] peer-checked:translate-x-7 flex items-center justify-center">
+              <div className="w-1.5 h-1.5 rounded-full transition-all duration-300 bg-primary-foreground/40 peer-checked:bg-success-foreground/50"></div>
+            </div>
+            <div className="absolute -inset-1.5 rounded-full border-2 border-transparent peer-focus-visible:border-success/30 transition-all"></div>
+          </label>
         </AppCard>
       </div>
 
