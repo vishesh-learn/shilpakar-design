@@ -52,12 +52,13 @@ const screens: { group: string; items: { label: string; path: string }[] }[] = [
 const ScreenNavigator: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [open, setOpen] = useState(false);
 
   // Hide on admin routes (they have their own sidebar)
   if (location.pathname.startsWith("/admin")) return null;
 
-  return (
-    <aside className="hidden md:flex fixed top-0 left-0 h-screen w-60 bg-card border-r border-border z-[100] flex-col overflow-y-auto">
+  const list = (
+    <>
       <div className="px-4 py-3 border-b border-border sticky top-0 bg-card">
         <p className="text-xs font-bold text-foreground uppercase tracking-wide">Dev Navigator</p>
         <p className="text-[10px] text-muted-foreground truncate mt-0.5">{location.pathname}</p>
@@ -74,7 +75,10 @@ const ScreenNavigator: React.FC = () => {
                 return (
                   <button
                     key={it.path}
-                    onClick={() => navigate(it.path)}
+                    onClick={() => {
+                      navigate(it.path);
+                      setOpen(false);
+                    }}
                     className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition-colors ${
                       active
                         ? "bg-primary text-primary-foreground font-semibold"
@@ -89,7 +93,43 @@ const ScreenNavigator: React.FC = () => {
           </div>
         ))}
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      <aside className="hidden md:flex fixed top-0 left-0 h-screen w-60 bg-card border-r border-border z-[100] flex-col overflow-y-auto">
+        {list}
+      </aside>
+
+      {/* Mobile hamburger */}
+      <button
+        onClick={() => setOpen(true)}
+        aria-label="Open dev navigator"
+        className="md:hidden fixed top-3 left-3 z-[110] w-9 h-9 rounded-full bg-card/90 backdrop-blur border border-border shadow-lg flex items-center justify-center text-foreground"
+      >
+        <Menu size={18} />
+      </button>
+
+      {open && (
+        <div className="md:hidden fixed inset-0 z-[120]">
+          <div
+            className="absolute inset-0 bg-slate-900/60"
+            onClick={() => setOpen(false)}
+          />
+          <aside className="absolute top-0 left-0 h-full w-60 bg-card border-r border-border flex flex-col overflow-y-auto">
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Close dev navigator"
+              className="absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:bg-accent"
+            >
+              <X size={16} />
+            </button>
+            {list}
+          </aside>
+        </div>
+      )}
+    </>
   );
 };
 
