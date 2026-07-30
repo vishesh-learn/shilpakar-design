@@ -22,7 +22,7 @@ const WorkerSetup: React.FC = () => {
 
   return (
     <div className="mobile-container bg-background min-h-screen flex flex-col">
-      <ScreenHeader title="Worker Profile Setup" />
+      <ScreenHeader title="Worker Profile Setup" rightAction={<ExitOnboardingButton />} />
       <div className="flex-1 px-5 py-6 space-y-6 animate-fade-in">
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full bg-accent flex items-center justify-center mb-3">
