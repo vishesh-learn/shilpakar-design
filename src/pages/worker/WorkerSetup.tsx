@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppButton from "@/components/AppButton";
+import ExitOnboardingButton from "@/components/ExitOnboardingButton";
 import { User, MapPin, Hammer } from "lucide-react";
+
 
 const skills = ["Carpenter", "Electrician", "Plumber", "Mason", "Helper", "Painter", "Welder"];
 
@@ -20,7 +22,7 @@ const WorkerSetup: React.FC = () => {
 
   return (
     <div className="mobile-container bg-background min-h-screen flex flex-col">
-      <ScreenHeader title="Worker Profile Setup" />
+      <ScreenHeader title="Worker Profile Setup" rightAction={<ExitOnboardingButton />} />
       <div className="flex-1 px-5 py-6 space-y-6 animate-fade-in">
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full bg-accent flex items-center justify-center mb-3">
