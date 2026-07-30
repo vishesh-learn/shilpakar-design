@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppButton from "@/components/AppButton";
+import ExitOnboardingButton from "@/components/ExitOnboardingButton";
 import { User, MapPin, Hammer } from "lucide-react";
+
 
 const skills = ["Carpenter", "Electrician", "Plumber", "Mason", "Helper", "Painter", "Welder"];
 
