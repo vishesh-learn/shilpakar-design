@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppButton from "@/components/AppButton";
+import ExitOnboardingButton from "@/components/ExitOnboardingButton";
 import { User, MapPin, Building2 } from "lucide-react";
+
 
 const ClientSetup: React.FC = () => {
   const navigate = useNavigate();
