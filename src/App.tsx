@@ -15,6 +15,8 @@ import ActiveJob from "./pages/worker/ActiveJob";
 import EarningsScreen from "./pages/worker/EarningsScreen";
 import WorkerProfile from "./pages/worker/WorkerProfile";
 import WorkerEditProfile from "./pages/worker/WorkerEditProfile";
+import WorkerHistory from "./pages/worker/WorkerHistory";
+import WorkerHistoryDetails from "./pages/worker/WorkerHistoryDetails";
 import ClientSetup from "./pages/client/ClientSetup";
 import ClientDashboard from "./pages/client/ClientDashboard";
 import PostJob from "./pages/client/PostJob";
