@@ -37,7 +37,15 @@ const EarningsScreen: React.FC = () => {
           </div>
         </AppCard>
 
-        <h3 className="font-bold text-foreground">Recent Payments</h3>
+        <div className="flex items-center justify-between">
+          <h3 className="font-bold text-foreground">Recent Payments</h3>
+          <button
+            onClick={() => navigate("/worker/history")}
+            className="text-primary text-sm font-semibold"
+          >
+            Work history
+          </button>
+        </div>
         {earnings.map((e, i) => (
           <AppCard key={i}>
             <div className="flex items-center justify-between">
