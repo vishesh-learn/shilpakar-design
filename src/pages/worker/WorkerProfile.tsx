@@ -59,7 +59,7 @@ const WorkerProfile: React.FC = () => {
           </div>
         </AppCard>
 
-        <AppCard>
+        <AppCard onClick={() => navigate("/worker/history")}>
           <div className="grid grid-cols-3 gap-2 text-center">
             <div>
               <p className="text-2xl font-bold text-foreground">47</p>
@@ -74,7 +74,9 @@ const WorkerProfile: React.FC = () => {
               <p className="text-xs text-muted-foreground">Earned</p>
             </div>
           </div>
+          <p className="text-primary text-sm font-semibold text-center mt-3">View work history</p>
         </AppCard>
+
 
         <AppButton variant="outline" onClick={() => navigate("/worker/edit-profile")}>Edit Profile</AppButton>
         <AppButton variant="ghost" className="text-destructive" onClick={handleLogout}>

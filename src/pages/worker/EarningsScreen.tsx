@@ -1,10 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import BottomNav from "@/components/BottomNav";
 import { IndianRupee, TrendingUp, Calendar } from "lucide-react";
 
 const EarningsScreen: React.FC = () => {
+  const navigate = useNavigate();
   const earnings = [
     { job: "Electrical Wiring", client: "Anil Sharma", amount: "₹2,400", days: "3 days", date: "Feb 10" },
     { job: "Fan Installation", client: "Priya Patel", amount: "₹800", days: "1 day", date: "Feb 8" },
@@ -37,7 +39,15 @@ const EarningsScreen: React.FC = () => {
           </div>
         </AppCard>
 
-        <h3 className="font-bold text-foreground">Recent Payments</h3>
+        <div className="flex items-center justify-between">
+          <h3 className="font-bold text-foreground">Recent Payments</h3>
+          <button
+            onClick={() => navigate("/worker/history")}
+            className="text-primary text-sm font-semibold"
+          >
+            Work history
+          </button>
+        </div>
         {earnings.map((e, i) => (
           <AppCard key={i}>
             <div className="flex items-center justify-between">
