@@ -60,7 +60,10 @@ const App = () => (
           <Route path="/worker/earnings" element={<EarningsScreen />} />
           <Route path="/worker/profile" element={<WorkerProfile />} />
           <Route path="/worker/edit-profile" element={<WorkerEditProfile />} />
+          <Route path="/worker/history" element={<WorkerHistory />} />
+          <Route path="/worker/history/:id" element={<WorkerHistoryDetails />} />
           <Route path="/client/setup" element={<ClientSetup />} />
+
           <Route path="/client/dashboard" element={<ClientDashboard />} />
           <Route path="/client/post-job" element={<PostJob />} />
           <Route path="/client/workers" element={<WorkerList />} />
