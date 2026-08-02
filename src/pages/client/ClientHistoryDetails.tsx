@@ -7,6 +7,27 @@ import BottomNav from "@/components/BottomNav";
 import { CheckCircle2, MapPin, CalendarDays, Clock, IndianRupee, User, Phone, Star, Receipt, RotateCcw } from "lucide-react";
 
 const historyJobs: Record<string, any> = {
+  "5": {
+    id: "5",
+    title: "AC Servicing",
+    worker: "Ramesh Kumar",
+    workerPhone: "+91 98765 11122",
+    rating: 0,
+    review: "",
+    location: "Andheri West, Mumbai",
+    fullAddress: "Flat 402, Sunshine Apartments, Andheri West, Mumbai 400058",
+    date: "May 28, 2026",
+    duration: "1h 10m",
+    startedAt: "11:00 AM",
+    completedAt: "12:10 PM",
+    amount: "\u20b9900",
+    breakdown: [
+      { label: "Service Charge", value: "\u20b9800" },
+      { label: "Materials", value: "\u20b950" },
+      { label: "Platform Fee", value: "\u20b950" },
+    ],
+    paymentMethod: "UPI \u00b7 Paid",
+  },
   "1": {
     id: "1",
     title: "Electrical Work",
@@ -139,8 +160,25 @@ const ClientHistoryDetails: React.FC = () => {
         </AppCard>
 
         <AppCard className="space-y-3">
-          <h3 className="font-bold text-foreground">Your Review</h3>
-          <p className="text-sm text-foreground italic">"{job.review}"</p>
+          <h3 className="font-bold text-foreground">Your Rating</h3>
+          {job.rating > 0 ? (
+            <p className="text-sm text-foreground italic">"{job.review}"</p>
+          ) : (
+            <>
+              <p className="text-sm text-muted-foreground">
+                You haven't rated this job yet. Your rating helps calculate the worker's overall rating.
+              </p>
+              <AppButton
+                onClick={() =>
+                  navigate("/client/rate-job", {
+                    state: { title: job.title, worker: job.worker, date: job.date },
+                  })
+                }
+              >
+                <Star size={16} /> Rate this job
+              </AppButton>
+            </>
+          )}
         </AppCard>
 
         <AppCard className="space-y-3">
