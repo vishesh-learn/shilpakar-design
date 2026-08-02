@@ -116,9 +116,9 @@ const PostJob: React.FC = () => {
       </div>
 
       <div className="px-5 pb-8">
-        <AppButton onClick={() => navigate("/client/workers")}
+        <AppButton onClick={handleSubmit}
           disabled={!title || !location || !wage || !selectedType}>
-          Post Job
+          {invitee ? "Send hire request" : "Post Job"}
         </AppButton>
       </div>
     </div>
