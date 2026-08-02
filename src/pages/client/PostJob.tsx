@@ -1,24 +1,58 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "sonner";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppButton from "@/components/AppButton";
-import { Briefcase, MapPin, IndianRupee, Calendar, FileText } from "lucide-react";
+import { Briefcase, MapPin, IndianRupee, Calendar, FileText, UserCheck, X } from "lucide-react";
 
 const jobTypes = ["Carpenter", "Electrician", "Plumber", "Mason", "Helper", "Painter"];
 
 const PostJob: React.FC = () => {
   const navigate = useNavigate();
+  const routerLocation = useLocation();
+  const invited = (routerLocation.state as { inviteWorker?: { name: string; skill: string } } | null)
+    ?.inviteWorker;
+  const [invitee, setInvitee] = useState(invited ?? null);
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [wage, setWage] = useState("");
   const [days, setDays] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedType, setSelectedType] = useState("");
+  const [selectedType, setSelectedType] = useState(invited?.skill ?? "");
+
+  const handleSubmit = () => {
+    if (invitee) {
+      toast.success(`Hire request sent to ${invitee.name}`, {
+        description: "You'll be notified once they accept.",
+      });
+      navigate("/client/dashboard");
+    } else {
+      toast.success("Job posted successfully");
+      navigate("/client/workers");
+    }
+  };
 
   return (
     <div className="mobile-container bg-background min-h-screen flex flex-col">
-      <ScreenHeader title="Post a Job" />
+      <ScreenHeader title={invitee ? "Hire Worker" : "Post a Job"} />
       <div className="flex-1 px-5 py-6 space-y-4 animate-fade-in overflow-y-auto">
+        {invitee && (
+          <div className="flex items-center gap-3 rounded-xl border-2 border-primary/30 bg-accent px-4 py-3">
+            <UserCheck className="text-primary flex-shrink-0" size={20} />
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-foreground">Inviting {invitee.name}</p>
+              <p className="text-xs text-muted-foreground">{invitee.skill}</p>
+            </div>
+            <button
+              aria-label="Remove invited worker"
+              onClick={() => setInvitee(null)}
+              className="text-muted-foreground"
+            >
+              <X size={18} />
+            </button>
+          </div>
+        )}
+
         <div>
           <label className="text-sm font-medium text-foreground mb-2 block">Job Title</label>
           <div className="flex items-center gap-3 border-2 border-border rounded-xl px-4 py-3 bg-card focus-within:border-primary transition-colors">
