@@ -32,7 +32,7 @@ const screens: { group: string; items: { label: string; path: string }[] }[] = [
       { label: "Post Job", path: "/client/post-job" },
       { label: "Workers", path: "/client/workers" },
       { label: "Worker Profile", path: "/client/worker/1" },
-      { label: "Rate Worker", path: "/client/rate-worker" },
+      { label: "Rate Job", path: "/client/rate-job" },
       { label: "Profile", path: "/client/profile" },
     ],
   },
