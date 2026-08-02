@@ -22,7 +22,7 @@ import ClientDashboard from "./pages/client/ClientDashboard";
 import PostJob from "./pages/client/PostJob";
 import WorkerList from "./pages/client/WorkerList";
 import WorkerProfileView from "./pages/client/WorkerProfileView";
-import RateWorker from "./pages/client/RateWorker";
+import RateJob from "./pages/client/RateJob";
 import ClientProfile from "./pages/client/ClientProfile";
 import ClientEditProfile from "./pages/client/ClientEditProfile";
 import ClientActiveJobs from "./pages/client/ClientActiveJobs";
@@ -68,7 +68,7 @@ const App = () => (
           <Route path="/client/post-job" element={<PostJob />} />
           <Route path="/client/workers" element={<WorkerList />} />
           <Route path="/client/worker/:id" element={<WorkerProfileView />} />
-          <Route path="/client/rate-worker" element={<RateWorker />} />
+          <Route path="/client/rate-job" element={<RateJob />} />
           <Route path="/client/profile" element={<ClientProfile />} />
           <Route path="/client/edit-profile" element={<ClientEditProfile />} />
           <Route path="/client/active-jobs" element={<ClientActiveJobs />} />

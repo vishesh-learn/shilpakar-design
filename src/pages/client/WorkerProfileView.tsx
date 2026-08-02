@@ -74,8 +74,8 @@ const WorkerProfileView: React.FC = () => {
       </div>
 
       <div className="px-5 pb-8 flex gap-3">
-        <AppButton variant="outline" onClick={() => navigate("/client/rate-worker")} fullWidth>
-          Rate Worker
+        <AppButton variant="outline" onClick={() => navigate("/client/rate-job")} fullWidth>
+          Rate Job
         </AppButton>
         <AppButton
           fullWidth
