@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
@@ -7,6 +7,11 @@ import { Star, Briefcase, Info } from "lucide-react";
 
 const RateJob: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const job = (location.state as { title?: string; worker?: string; date?: string } | null) ?? {};
+  const title = job.title ?? "Electrical Work";
+  const worker = job.worker ?? "Mahesh Joshi";
+  const date = job.date ?? "May 22, 2026";
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
 
@@ -18,8 +23,8 @@ const RateJob: React.FC = () => {
           <div className="w-20 h-20 rounded-3xl bg-accent flex items-center justify-center mb-3">
             <Briefcase className="text-primary" size={36} />
           </div>
-          <h2 className="text-lg font-bold text-foreground">Electrical Work</h2>
-          <p className="text-muted-foreground text-sm">Completed · May 22, 2026</p>
+          <h2 className="text-lg font-bold text-foreground">{title}</h2>
+          <p className="text-muted-foreground text-sm">{worker} · Completed {date}</p>
         </div>
 
         <AppCard className="flex flex-col items-center gap-4">
