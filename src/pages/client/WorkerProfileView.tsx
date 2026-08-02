@@ -77,7 +77,16 @@ const WorkerProfileView: React.FC = () => {
         <AppButton variant="outline" onClick={() => navigate("/client/rate-worker")} fullWidth>
           Rate Worker
         </AppButton>
-        <AppButton fullWidth>Hire Now</AppButton>
+        <AppButton
+          fullWidth
+          onClick={() =>
+            navigate("/client/post-job", {
+              state: { inviteWorker: { name: "Ramesh Kumar", skill: "Electrician" } },
+            })
+          }
+        >
+          Hire Now
+        </AppButton>
       </div>
     </div>
   );
