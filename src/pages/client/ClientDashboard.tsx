@@ -10,6 +10,7 @@ const activeJobsPreview = [
 ];
 
 const historyPreview = [
+  { id: "5", title: "AC Servicing", worker: "Ramesh Kumar", date: "May 28", amount: "₹900", rating: 0 },
   { id: "1", title: "Electrical Work", worker: "Mahesh Joshi", date: "May 22", amount: "₹1,200", rating: 5 },
   { id: "2", title: "Deep Cleaning", worker: "Priya Devi", date: "May 18", amount: "₹800", rating: 4 },
 ];
@@ -95,11 +96,25 @@ const ClientDashboard: React.FC = () => {
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-muted-foreground">{job.date}</span>
-                  <div className="flex items-center gap-0.5">
-                    {Array.from({ length: job.rating }).map((_, i) => (
-                      <Star key={i} size={12} className="text-warning fill-warning" />
-                    ))}
-                  </div>
+                  {job.rating > 0 ? (
+                    <div className="flex items-center gap-0.5">
+                      {Array.from({ length: job.rating }).map((_, i) => (
+                        <Star key={i} size={12} className="text-warning fill-warning" />
+                      ))}
+                    </div>
+                  ) : (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate("/client/rate-job", {
+                          state: { title: job.title, worker: job.worker, date: job.date },
+                        });
+                      }}
+                      className="text-primary font-semibold flex items-center gap-1"
+                    >
+                      <Star size={12} /> Rate this job
+                    </button>
+                  )}
                 </div>
               </AppCard>
             ))}

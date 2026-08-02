@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import BottomNav from "@/components/BottomNav";
 import AppCard from "@/components/AppCard";
 import ScreenHeader from "@/components/ScreenHeader";
+import AppButton from "@/components/AppButton";
 import { CheckCircle2, Star } from "lucide-react";
 
 const pastJobs = [
+  { id: "5", title: "AC Servicing", worker: "Ramesh Kumar", date: "May 28, 2026", amount: "₹900", rating: 0 },
   { id: "1", title: "Electrical Work", worker: "Mahesh Joshi", date: "May 22, 2026", amount: "₹1,200", rating: 5 },
   { id: "2", title: "Deep Cleaning", worker: "Priya Devi", date: "May 18, 2026", amount: "₹800", rating: 4 },
   { id: "3", title: "Garden Maintenance", worker: "Vikas Singh", date: "May 10, 2026", amount: "₹600", rating: 5 },
@@ -34,12 +36,32 @@ const ClientHistory: React.FC = () => {
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">{job.date}</span>
-              <div className="flex items-center gap-1">
-                {Array.from({ length: job.rating }).map((_, i) => (
-                  <Star key={i} size={14} className="text-warning fill-warning" />
-                ))}
-              </div>
+              {job.rating > 0 ? (
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: job.rating }).map((_, i) => (
+                    <Star key={i} size={14} className="text-warning fill-warning" />
+                  ))}
+                </div>
+              ) : (
+                <span className="text-xs font-semibold text-warning bg-warning/10 px-2 py-1 rounded-full">
+                  Not rated
+                </span>
+              )}
             </div>
+            {job.rating === 0 && (
+              <div onClick={(e) => e.stopPropagation()}>
+                <AppButton
+                  size="md"
+                  onClick={() =>
+                    navigate("/client/rate-job", {
+                      state: { title: job.title, worker: job.worker, date: job.date },
+                    })
+                  }
+                >
+                  <Star size={16} /> Rate this job
+                </AppButton>
+              </div>
+            )}
           </AppCard>
         ))}
       </div>
