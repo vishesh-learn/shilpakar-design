@@ -4,7 +4,7 @@ import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import BottomNav from "@/components/BottomNav";
-import { Briefcase, MapPin, Clock, Phone, MessageCircle, CheckCircle2, User, IndianRupee, CalendarDays } from "lucide-react";
+import { Briefcase, MapPin, Clock, Phone, MessageCircle, CheckCircle2, User, UserPlus, Hourglass, IndianRupee, CalendarDays } from "lucide-react";
 
 const activeJobs: Record<string, any> = {
   "1": {
