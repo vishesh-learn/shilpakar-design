@@ -24,7 +24,24 @@ const activeJobs = [
     status: "On the way",
     time: "Arriving in 20 min",
   },
+  {
+    id: "3",
+    title: "Wall Painting",
+    worker: "No worker yet",
+    location: "Andheri West, Mumbai",
+    status: "Awaiting worker",
+    time: "Posted 30 min ago",
+  },
+  {
+    id: "4",
+    title: "Furniture Repair",
+    worker: "Invited: Vikas Singh",
+    location: "Powai, Mumbai",
+    status: "Invite sent",
+    time: "Sent 10 min ago",
+  },
 ];
+
 
 const ClientActiveJobs: React.FC = () => {
   const navigate = useNavigate();

@@ -7,7 +7,10 @@ import { Briefcase, MapPin, Clock, CheckCircle2, Star, ChevronRight } from "luci
 const activeJobsPreview = [
   { id: "1", title: "House Cleaning", worker: "Ramesh Kumar", location: "Andheri West", status: "In Progress", time: "Started 2h ago" },
   { id: "2", title: "Plumbing Repair", worker: "Suresh Patil", location: "Bandra East", status: "On the way", time: "Arriving 20 min" },
+  { id: "3", title: "Wall Painting", worker: "No worker yet", location: "Andheri West", status: "Awaiting worker", time: "Posted 30 min ago" },
+  { id: "4", title: "Furniture Repair", worker: "Invited: Vikas Singh", location: "Powai", status: "Invite sent", time: "Sent 10 min ago" },
 ];
+
 
 const historyPreview = [
   { id: "5", title: "AC Servicing", worker: "Ramesh Kumar", date: "May 28", amount: "₹900", rating: 0 },

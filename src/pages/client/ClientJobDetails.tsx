@@ -4,7 +4,7 @@ import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import BottomNav from "@/components/BottomNav";
-import { Briefcase, MapPin, Clock, Phone, MessageCircle, CheckCircle2, User, IndianRupee, CalendarDays } from "lucide-react";
+import { Briefcase, MapPin, Clock, Phone, MessageCircle, CheckCircle2, User, UserPlus, Hourglass, IndianRupee, CalendarDays } from "lucide-react";
 
 const activeJobs: Record<string, any> = {
   "1": {
@@ -46,7 +46,37 @@ const activeJobs: Record<string, any> = {
       { time: "12:40 PM", text: "Worker on the way to your location" },
     ],
   },
+  "3": {
+    id: "3",
+    title: "Wall Painting",
+    stage: "unassigned",
+    location: "Andheri West, Mumbai",
+    fullAddress: "Flat 402, Sunshine Apartments, Andheri West, Mumbai 400058",
+    status: "Awaiting worker",
+    startedAt: "Posted today, 11:30 AM",
+    estimatedCompletion: "Flexible",
+    amount: "₹1,500",
+    progress: 0,
+    updates: [{ time: "11:30 AM", text: "Job posted. Waiting for a worker to accept." }],
+  },
+  "4": {
+    id: "4",
+    title: "Furniture Repair",
+    stage: "invited",
+    worker: "Vikas Singh",
+    workerPhone: "+91 98765 44455",
+    rating: 4.7,
+    location: "Powai, Mumbai",
+    fullAddress: "Villa 7, Hiranandani Gardens, Powai, Mumbai 400076",
+    status: "Invite sent",
+    startedAt: "Proposed tomorrow, 10:00 AM",
+    estimatedCompletion: "Pending acceptance",
+    amount: "₹1,000",
+    progress: 0,
+    updates: [{ time: "12:05 PM", text: "Hire request sent to Vikas Singh" }],
+  },
 };
+
 
 const ClientJobDetails: React.FC = () => {
   const { id } = useParams();
@@ -72,40 +102,89 @@ const ClientJobDetails: React.FC = () => {
               {job.status}
             </span>
           </div>
-          <div>
-            <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-              <span>Progress</span>
-              <span>{job.progress}%</span>
+          {job.stage !== "unassigned" && job.stage !== "invited" && (
+            <div>
+              <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
+                <span>Progress</span>
+                <span>{job.progress}%</span>
+              </div>
+              <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-primary rounded-full transition-all"
+                  style={{ width: `${job.progress}%` }}
+                />
+              </div>
             </div>
-            <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-              <div
-                className="h-full bg-primary rounded-full transition-all"
-                style={{ width: `${job.progress}%` }}
-              />
-            </div>
-          </div>
+          )}
         </AppCard>
 
-        <AppCard className="space-y-3">
-          <h3 className="font-bold text-foreground">Worker</h3>
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center">
-              <User className="text-primary" size={22} />
+        {job.stage === "unassigned" ? (
+          <AppCard className="space-y-3">
+            <h3 className="font-bold text-foreground">Worker</h3>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+                <UserPlus className="text-muted-foreground" size={22} />
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-foreground">No worker assigned yet</p>
+                <p className="text-xs text-muted-foreground">Invite a worker or wait for someone to accept.</p>
+              </div>
             </div>
-            <div className="flex-1">
-              <p className="font-semibold text-foreground">{job.worker}</p>
-              <p className="text-xs text-muted-foreground">★ {job.rating} · {job.workerPhone}</p>
+            <AppButton onClick={() => navigate("/client/workers")}>
+              <UserPlus size={16} /> Invite a worker
+            </AppButton>
+          </AppCard>
+        ) : job.stage === "invited" ? (
+          <AppCard className="space-y-3">
+            <h3 className="font-bold text-foreground">Invited Worker</h3>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center">
+                <User className="text-primary" size={22} />
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-foreground">{job.worker}</p>
+                <p className="text-xs text-muted-foreground">★ {job.rating} · {job.workerPhone}</p>
+              </div>
+              <span className="text-xs font-semibold text-warning bg-warning/10 px-2 py-1 rounded-full">
+                Pending
+              </span>
             </div>
-          </div>
-          <div className="flex gap-2 pt-1">
-            <AppButton variant="outline" size="md" onClick={() => window.open(`tel:${job.workerPhone}`)}>
-              <Phone size={16} /> Call
-            </AppButton>
-            <AppButton variant="outline" size="md">
-              <MessageCircle size={16} /> Chat
-            </AppButton>
-          </div>
-        </AppCard>
+            <div className="flex items-start gap-2 text-xs text-muted-foreground bg-accent/50 rounded-xl p-3">
+              <Hourglass size={14} className="shrink-0 mt-0.5 text-primary" />
+              <p>Waiting for {job.worker} to accept your hire request.</p>
+            </div>
+            <div className="flex gap-2 pt-1">
+              <AppButton variant="outline" size="md" onClick={() => window.open(`tel:${job.workerPhone}`)}>
+                <Phone size={16} /> Call
+              </AppButton>
+              <AppButton variant="outline" size="md" onClick={() => navigate("/client/workers")}>
+                <UserPlus size={16} /> Invite another
+              </AppButton>
+            </div>
+          </AppCard>
+        ) : (
+          <AppCard className="space-y-3">
+            <h3 className="font-bold text-foreground">Worker</h3>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center">
+                <User className="text-primary" size={22} />
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-foreground">{job.worker}</p>
+                <p className="text-xs text-muted-foreground">★ {job.rating} · {job.workerPhone}</p>
+              </div>
+            </div>
+            <div className="flex gap-2 pt-1">
+              <AppButton variant="outline" size="md" onClick={() => window.open(`tel:${job.workerPhone}`)}>
+                <Phone size={16} /> Call
+              </AppButton>
+              <AppButton variant="outline" size="md">
+                <MessageCircle size={16} /> Chat
+              </AppButton>
+            </div>
+          </AppCard>
+        )}
+
 
         <AppCard className="space-y-3">
           <h3 className="font-bold text-foreground">Details</h3>
