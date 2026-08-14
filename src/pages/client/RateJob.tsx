@@ -21,7 +21,7 @@ const RateJob: React.FC = () => {
 
   return (
     <div className="mobile-container bg-background min-h-screen flex flex-col">
-      <ScreenHeader title="Rate Job" />
+      <ScreenHeader title={isUpdate ? "Update Rating" : "Rate Job"} />
       <div className="flex-1 px-5 py-6 space-y-6 animate-fade-in">
         <div className="flex flex-col items-center">
           <div className="w-20 h-20 rounded-3xl bg-accent flex items-center justify-center mb-3">
@@ -68,7 +68,7 @@ const RateJob: React.FC = () => {
 
       <div className="px-5 pb-8">
         <AppButton onClick={() => navigate("/client/dashboard")} disabled={rating === 0}>
-          Submit Rating
+          {isUpdate ? "Update Rating" : "Submit Rating"}
         </AppButton>
       </div>
     </div>
