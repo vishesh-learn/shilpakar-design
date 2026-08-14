@@ -162,7 +162,39 @@ const ClientHistoryDetails: React.FC = () => {
         <AppCard className="space-y-3">
           <h3 className="font-bold text-foreground">Your Rating</h3>
           {job.rating > 0 ? (
-            <p className="text-sm text-foreground italic">"{job.review}"</p>
+            <>
+              <div className="flex items-center gap-2">
+                <div className="flex gap-0.5">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star
+                      key={s}
+                      size={22}
+                      className={s <= job.rating ? "text-warning" : "text-border"}
+                      fill={s <= job.rating ? "currentColor" : "none"}
+                    />
+                  ))}
+                </div>
+                <span className="text-sm font-semibold text-foreground">{job.rating}.0</span>
+              </div>
+              {job.review && <p className="text-sm text-foreground italic">"{job.review}"</p>}
+              <AppButton
+                variant="outline"
+                size="md"
+                onClick={() =>
+                  navigate("/client/rate-job", {
+                    state: {
+                      title: job.title,
+                      worker: job.worker,
+                      date: job.date,
+                      rating: job.rating,
+                      review: job.review,
+                    },
+                  })
+                }
+              >
+                <Star size={16} /> Update rating
+              </AppButton>
+            </>
           ) : (
             <>
               <p className="text-sm text-muted-foreground">
@@ -180,6 +212,7 @@ const ClientHistoryDetails: React.FC = () => {
             </>
           )}
         </AppCard>
+
 
         <AppCard className="space-y-3">
           <h3 className="font-bold text-foreground">Details</h3>

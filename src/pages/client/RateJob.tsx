@@ -8,12 +8,16 @@ import { Star, Briefcase, Info } from "lucide-react";
 const RateJob: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const job = (location.state as { title?: string; worker?: string; date?: string } | null) ?? {};
+  const job =
+    (location.state as { title?: string; worker?: string; date?: string; rating?: number; review?: string } | null) ??
+    {};
   const title = job.title ?? "Electrical Work";
   const worker = job.worker ?? "Mahesh Joshi";
   const date = job.date ?? "May 22, 2026";
-  const [rating, setRating] = useState(0);
-  const [review, setReview] = useState("");
+  const isUpdate = (job.rating ?? 0) > 0;
+  const [rating, setRating] = useState(job.rating ?? 0);
+  const [review, setReview] = useState(job.review ?? "");
+
 
   return (
     <div className="mobile-container bg-background min-h-screen flex flex-col">
