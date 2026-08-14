@@ -46,7 +46,37 @@ const activeJobs: Record<string, any> = {
       { time: "12:40 PM", text: "Worker on the way to your location" },
     ],
   },
+  "3": {
+    id: "3",
+    title: "Wall Painting",
+    stage: "unassigned",
+    location: "Andheri West, Mumbai",
+    fullAddress: "Flat 402, Sunshine Apartments, Andheri West, Mumbai 400058",
+    status: "Awaiting worker",
+    startedAt: "Posted today, 11:30 AM",
+    estimatedCompletion: "Flexible",
+    amount: "₹1,500",
+    progress: 0,
+    updates: [{ time: "11:30 AM", text: "Job posted. Waiting for a worker to accept." }],
+  },
+  "4": {
+    id: "4",
+    title: "Furniture Repair",
+    stage: "invited",
+    worker: "Vikas Singh",
+    workerPhone: "+91 98765 44455",
+    rating: 4.7,
+    location: "Powai, Mumbai",
+    fullAddress: "Villa 7, Hiranandani Gardens, Powai, Mumbai 400076",
+    status: "Invite sent",
+    startedAt: "Proposed tomorrow, 10:00 AM",
+    estimatedCompletion: "Pending acceptance",
+    amount: "₹1,000",
+    progress: 0,
+    updates: [{ time: "12:05 PM", text: "Hire request sent to Vikas Singh" }],
+  },
 };
+
 
 const ClientJobDetails: React.FC = () => {
   const { id } = useParams();
