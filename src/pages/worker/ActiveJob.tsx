@@ -132,8 +132,8 @@ const ActiveJob: React.FC = () => {
       </div>
 
       {sheetOpen && (
-        <div className="fixed inset-y-0 left-1/2 -translate-x-1/2 md:left-[calc(50%+120px)] w-full max-w-[390px] z-50 flex items-end justify-center bg-foreground/40 animate-fade-in">
-          <div className="w-full bg-card rounded-t-3xl p-5 pb-8 space-y-4">
+        <div className="fixed inset-y-0 left-1/2 -translate-x-1/2 md:left-[calc(50%+120px)] w-full max-w-[390px] z-50 flex items-end justify-center bg-foreground/40">
+          <div className="w-full bg-card rounded-t-3xl p-5 pb-8 space-y-4 animate-fade-in">
             <div className="flex items-center justify-between">
               <h3 className="font-bold text-foreground">
                 {editingId ? `Correct Day ${currentDay} log` : `Day ${currentDay + 1} work done`}
