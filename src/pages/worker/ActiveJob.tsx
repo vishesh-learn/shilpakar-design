@@ -98,6 +98,13 @@ const ActiveJob: React.FC = () => {
         </AppCard>
 
         <AppCard>
+          <h3 className="font-bold text-foreground mb-2">Description</h3>
+          <p className="text-muted-foreground text-sm leading-relaxed">
+            Complete rewiring of a 2BHK apartment. Work includes replacing old wiring, installing new switches and sockets, and setting up the electrical panel. Tools will be provided.
+          </p>
+        </AppCard>
+
+        <AppCard>
           <h3 className="font-bold text-foreground mb-3">Daily Log</h3>
           <div className="space-y-3">
             {log.map((entry) => (
