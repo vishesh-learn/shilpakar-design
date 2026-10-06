@@ -10,6 +10,7 @@ const historyJobs: Record<string, any> = {
   "5": {
     id: "5",
     title: "AC Servicing",
+    description: "Routine servicing of a 1.5 ton split AC including filter cleaning and gas level check.",
     worker: "Ramesh Kumar",
     workerPhone: "+91 98765 11122",
     rating: 0,
@@ -31,6 +32,7 @@ const historyJobs: Record<string, any> = {
   "1": {
     id: "1",
     title: "Electrical Work",
+    description: "Replace old switches and fix two faulty power sockets in the bedroom and hall.",
     worker: "Mahesh Joshi",
     workerPhone: "+91 98765 22233",
     rating: 5,
@@ -52,6 +54,7 @@ const historyJobs: Record<string, any> = {
   "2": {
     id: "2",
     title: "Deep Cleaning",
+    description: "Deep cleaning of the entire shop, including floor scrubbing and glass cleaning.",
     worker: "Priya Devi",
     workerPhone: "+91 98765 33344",
     rating: 4,
@@ -72,6 +75,7 @@ const historyJobs: Record<string, any> = {
   "3": {
     id: "3",
     title: "Garden Maintenance",
+    description: "Trimming plants, mowing the lawn, and clearing dried leaves from the garden.",
     worker: "Vikas Singh",
     workerPhone: "+91 98765 44455",
     rating: 5,
@@ -92,6 +96,7 @@ const historyJobs: Record<string, any> = {
   "4": {
     id: "4",
     title: "Painting",
+    description: "One bedroom to be repainted with putty and two coats of paint. Furniture to be covered before starting.",
     worker: "Arjun Yadav",
     workerPhone: "+91 98765 55566",
     rating: 4,
@@ -213,6 +218,11 @@ const ClientHistoryDetails: React.FC = () => {
           )}
         </AppCard>
 
+
+        <AppCard className="space-y-3">
+          <h3 className="font-bold text-foreground">Description</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">{job.description}</p>
+        </AppCard>
 
         <AppCard className="space-y-3">
           <h3 className="font-bold text-foreground">Details</h3>
