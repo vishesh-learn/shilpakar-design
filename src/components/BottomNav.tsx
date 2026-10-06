@@ -31,7 +31,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ type }) => {
     <div className="fixed bottom-0 left-1/2 -translate-x-1/2 md:left-[calc(50%+120px)] w-full max-w-[390px] bg-card border-x border-t border-border">
       <div className="flex items-center justify-around py-2 pb-6">
         {tabs.map((tab) => {
-          const isActive = location.pathname === tab.path;
+          const isActive = location.pathname === tab.path || (tab.path === "/worker/jobs" && location.pathname.startsWith("/worker/job/"));
           return (
             <button
               key={tab.path}

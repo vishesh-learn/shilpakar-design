@@ -1,0 +1,3 @@
+- [ ] Add worker invitation previews and an Invitations view inside Jobs.
+- [ ] Add worker apply/accept/decline actions for the two connection paths.
+- [ ] Add client application review from unassigned job details.

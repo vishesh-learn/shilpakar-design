@@ -137,6 +137,12 @@ const ClientJobDetails: React.FC = () => {
             <AppButton onClick={() => navigate("/client/workers")}>
               <UserPlus size={16} /> Invite a worker
             </AppButton>
+            <AppButton
+              variant="outline"
+              onClick={() => navigate(`/client/active-job/${job.id}/applications`)}
+            >
+              View applications
+            </AppButton>
           </AppCard>
         ) : job.stage === "invited" ? (
           <AppCard className="space-y-3">

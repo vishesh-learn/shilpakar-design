@@ -1,0 +1,1 @@
+Job invitations and client applications are presented as separate role-specific flows within the existing job navigation, keeping each action close to its related job.
