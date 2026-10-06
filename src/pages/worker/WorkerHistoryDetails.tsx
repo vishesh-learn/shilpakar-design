@@ -34,6 +34,11 @@ const WorkerHistoryDetails: React.FC = () => {
         </AppCard>
 
         <AppCard>
+          <h3 className="font-bold text-foreground mb-2">Description</h3>
+          <p className="text-muted-foreground text-sm leading-relaxed">{job.description}</p>
+        </AppCard>
+
+        <AppCard>
           <p className="text-xs text-muted-foreground mb-2">Client Rating</p>
           <div className="flex items-center gap-1">
             {Array.from({ length: 5 }).map((_, i) => (

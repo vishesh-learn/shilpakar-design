@@ -6,10 +6,10 @@ import BottomNav from "@/components/BottomNav";
 import { CheckCircle2, Star } from "lucide-react";
 
 export const pastJobs = [
-  { id: "1", title: "Electrical Wiring", client: "Anil Sharma", location: "Andheri West, Mumbai", date: "Feb 10, 2026", duration: "3 days", amount: "₹2,400", rating: 5 },
-  { id: "2", title: "Fan Installation", client: "Priya Patel", location: "Bandra, Mumbai", date: "Feb 8, 2026", duration: "1 day", amount: "₹800", rating: 4 },
-  { id: "3", title: "Socket Repair", client: "Raj Kumar", location: "Powai, Mumbai", date: "Feb 5, 2026", duration: "1 day", amount: "₹500", rating: 5 },
-  { id: "4", title: "Kitchen Rewiring", client: "Neha Gupta", location: "Malad, Mumbai", date: "Jan 28, 2026", duration: "2 days", amount: "₹1,600", rating: 4 },
+  { id: "1", title: "Electrical Wiring", client: "Anil Sharma", location: "Andheri West, Mumbai", date: "Feb 10, 2026", duration: "3 days", amount: "₹2,400", rating: 5, description: "Complete rewiring of a 2BHK apartment. Work included replacing old wiring, installing new switches and sockets, and setting up the electrical panel. Tools were provided on site." },
+  { id: "2", title: "Fan Installation", client: "Priya Patel", location: "Bandra, Mumbai", date: "Feb 8, 2026", duration: "1 day", amount: "₹800", rating: 4, description: "Installation of two ceiling fans in the bedroom and living room, including mounting, wiring connection, and testing speed settings." },
+  { id: "3", title: "Socket Repair", client: "Raj Kumar", location: "Powai, Mumbai", date: "Feb 5, 2026", duration: "1 day", amount: "₹500", rating: 5, description: "Repair of two faulty power sockets and replacement of a damaged switchboard in the kitchen area." },
+  { id: "4", title: "Kitchen Rewiring", client: "Neha Gupta", location: "Malad, Mumbai", date: "Jan 28, 2026", duration: "2 days", amount: "₹1,600", rating: 4, description: "Rewiring of the kitchen circuit with new heat-resistant cables, additional socket points for appliances, and a new MCB for safety." },
 ];
 
 const WorkerHistory: React.FC = () => {
