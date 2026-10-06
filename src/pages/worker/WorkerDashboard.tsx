@@ -14,6 +14,11 @@ const activeJob = {
   progress: "Day 2 of 3",
 };
 
+const invitations = [
+  { id: "invitation-1", title: "Apartment Electrical Repair", client: "Anil Sharma", location: "Andheri West", wage: "₹800/day", time: "Invited 20 min ago", type: "Electrician" },
+  { id: "invitation-2", title: "Bathroom Pipe Repair", client: "Priya Patel", location: "Bandra", wage: "₹700/day", time: "Invited 1 hour ago", type: "Plumber" },
+];
+
 const nearbyJobs = [
   { id: 2, title: "Bathroom Plumbing", client: "Priya Patel", location: "Bandra (1.2 km)", wage: "₹700/day", time: "3 hours ago", type: "Plumber" },
   { id: 3, title: "Wall Construction", client: "Raj Builders", location: "Powai (2.4 km)", wage: "₹900/day", time: "5 hours ago", type: "Mason" },
@@ -117,6 +122,36 @@ const WorkerDashboard: React.FC = () => {
               <Clock size={14} /> {activeJob.progress}
             </div>
           </AppCard>
+        </section>
+
+        <section>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-bold text-foreground text-lg">Job invitations</h2>
+            <button
+              onClick={() => navigate("/worker/jobs?tab=invitations")}
+              className="text-primary text-sm font-semibold flex items-center gap-0.5"
+            >
+              View more <ChevronRight size={16} />
+            </button>
+          </div>
+          <div className="space-y-3">
+            {invitations.map((job) => (
+              <AppCard key={job.id} onClick={() => navigate(`/worker/job/${job.id}`)}>
+                <div className="flex items-start justify-between mb-2 gap-2">
+                  <div>
+                    <h3 className="font-bold text-foreground">{job.title}</h3>
+                    <p className="text-muted-foreground text-sm">{job.client}</p>
+                  </div>
+                  <span className="bg-accent text-accent-foreground text-xs font-medium px-3 py-1 rounded-full">Invitation</span>
+                </div>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                  <span className="flex items-center gap-1"><MapPin size={14} /> {job.location}</span>
+                  <span className="flex items-center gap-1"><IndianRupee size={14} /> {job.wage}</span>
+                </div>
+                <div className="flex items-center gap-1 text-xs text-muted-foreground mt-2"><Clock size={12} /> {job.time}</div>
+              </AppCard>
+            ))}
+          </div>
         </section>
 
         {/* Nearby Jobs */}

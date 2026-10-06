@@ -18,6 +18,7 @@ const screens: { group: string; items: { label: string; path: string }[] }[] = [
       { label: "Setup", path: "/worker/setup" },
       { label: "Dashboard", path: "/worker/dashboard" },
       { label: "Jobs", path: "/worker/jobs" },
+      { label: "Invitations", path: "/worker/jobs?tab=invitations" },
       { label: "Job Details", path: "/worker/job/1" },
       { label: "Active Job", path: "/worker/active-job" },
       { label: "Earnings", path: "/worker/earnings" },
@@ -71,7 +72,8 @@ const ScreenNavigator: React.FC = () => {
             </p>
             <div className="space-y-0.5">
               {g.items.map((it) => {
-                const active = location.pathname === it.path;
+                const [path, search] = it.path.split("?");
+                const active = location.pathname === path && (!search || location.search === `?${search}`);
                 return (
                   <button
                     key={it.path}

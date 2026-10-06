@@ -1,19 +1,29 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppButton from "@/components/AppButton";
 import AppCard from "@/components/AppCard";
-import { MapPin, Calendar, IndianRupee, Clock, User } from "lucide-react";
+import BottomNav from "@/components/BottomNav";
+import { MapPin, Calendar, IndianRupee, Clock, User, MailCheck } from "lucide-react";
 
 const JobDetails: React.FC = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const isInvitation = id?.startsWith("invitation-") ?? false;
+  const [applied, setApplied] = useState(false);
+
+  const handleApply = () => {
+    setApplied(true);
+    toast.success("Application sent", { description: "The client can now review your application." });
+  };
 
   return (
     <div className="mobile-container bg-background min-h-screen flex flex-col">
       <ScreenHeader title="Job Details" />
       <div className="flex-1 px-5 py-6 space-y-4 animate-fade-in">
         <div>
-          <h2 className="text-xl font-bold text-foreground">Electrical Wiring</h2>
+          <h2 className="text-xl font-bold text-foreground">{isInvitation ? (id === "invitation-2" ? "Bathroom Pipe Repair" : "Apartment Electrical Repair") : "Electrical Wiring"}</h2>
           <span className="bg-accent text-accent-foreground text-xs font-medium px-3 py-1 rounded-full mt-2 inline-block">
             Electrician
           </span>
@@ -25,7 +35,7 @@ const JobDetails: React.FC = () => {
               <User className="text-primary" size={20} />
               <div>
                 <p className="text-xs text-muted-foreground">Client</p>
-                <p className="font-semibold text-foreground">Anil Sharma</p>
+                <p className="font-semibold text-foreground">{isInvitation && id === "invitation-2" ? "Priya Patel" : "Anil Sharma"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -67,14 +77,19 @@ const JobDetails: React.FC = () => {
         </AppCard>
       </div>
 
-      <div className="px-5 pb-8 flex gap-3">
-        <AppButton variant="outline" onClick={() => navigate(-1)} fullWidth>
-          Reject
-        </AppButton>
-        <AppButton onClick={() => navigate("/worker/active-job")} fullWidth>
-          Accept
-        </AppButton>
+      <div className="px-5 pb-24 flex gap-3">
+        {isInvitation ? (
+          <>
+            <AppButton variant="outline" onClick={() => { toast("Invitation declined"); navigate("/worker/jobs?tab=invitations"); }} fullWidth>Decline</AppButton>
+            <AppButton onClick={() => { toast.success("Invitation accepted"); navigate("/worker/active-job"); }} fullWidth>Accept invitation</AppButton>
+          </>
+        ) : (
+          <AppButton onClick={handleApply} disabled={applied} fullWidth>
+            <MailCheck size={18} /> {applied ? "Application sent" : "Apply for this job"}
+          </AppButton>
+        )}
       </div>
+      <BottomNav type="worker" />
     </div>
   );
 };
