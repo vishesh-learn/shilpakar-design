@@ -10,6 +10,7 @@ const activeJobs: Record<string, any> = {
   "1": {
     id: "1",
     title: "House Cleaning",
+    description: "Full deep cleaning of a 2BHK apartment including kitchen and bathrooms. Cleaning supplies will be provided.",
     worker: "Ramesh Kumar",
     workerPhone: "+91 98765 43210",
     rating: 4.8,
@@ -30,6 +31,7 @@ const activeJobs: Record<string, any> = {
   "2": {
     id: "2",
     title: "Plumbing Repair",
+    description: "Fix leaking kitchen tap and replace the inlet pipe under the sink. Plumber should bring basic tools.",
     worker: "Suresh Patil",
     workerPhone: "+91 98765 11122",
     rating: 4.6,
@@ -49,6 +51,7 @@ const activeJobs: Record<string, any> = {
   "3": {
     id: "3",
     title: "Wall Painting",
+    description: "Repaint the living room and bedroom walls. Two coats of emulsion paint; walls to be prepared before painting.",
     stage: "unassigned",
     location: "Andheri West, Mumbai",
     fullAddress: "Flat 402, Sunshine Apartments, Andheri West, Mumbai 400058",
@@ -62,6 +65,7 @@ const activeJobs: Record<string, any> = {
   "4": {
     id: "4",
     title: "Furniture Repair",
+    description: "Repair a broken wardrobe hinge and fix the loose legs of a dining table. Carpentry experience required.",
     stage: "invited",
     worker: "Vikas Singh",
     workerPhone: "+91 98765 44455",
@@ -185,6 +189,11 @@ const ClientJobDetails: React.FC = () => {
           </AppCard>
         )}
 
+
+        <AppCard className="space-y-3">
+          <h3 className="font-bold text-foreground">Description</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">{job.description}</p>
+        </AppCard>
 
         <AppCard className="space-y-3">
           <h3 className="font-bold text-foreground">Details</h3>
