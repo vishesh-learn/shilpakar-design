@@ -42,7 +42,7 @@ const WorkerList: React.FC = () => {
       <ScreenHeader title={inviteJob ? "Invite a Worker" : "Workers Nearby"} showBack={!!inviteJob} />
 
       {inviteJob && (
-        <div className="sticky top-[60px] z-10 w-full bg-primary text-primary-foreground border-b border-primary/40 shadow-md">
+        <div className="sticky top-[65px] z-20 w-full bg-primary text-primary-foreground border-b border-primary/40 shadow-md">
           <div className="flex items-center gap-3 px-5 py-3">
             <div className="w-9 h-9 rounded-lg bg-primary-foreground/15 flex items-center justify-center shrink-0">
               <Briefcase className="text-primary-foreground" size={18} />
