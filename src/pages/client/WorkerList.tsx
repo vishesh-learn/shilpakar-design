@@ -43,7 +43,7 @@ const WorkerList: React.FC = () => {
 
       <div className="px-5 py-4 space-y-3 animate-fade-in">
         {inviteJob && (
-          <AppCard className="border-2 border-primary bg-accent/40">
+          <AppCard className="border-2 border-primary bg-accent/40 sticky top-16 z-10">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center shrink-0">
                 <Briefcase className="text-primary-foreground" size={20} />
@@ -93,7 +93,7 @@ const WorkerList: React.FC = () => {
           );
         })}
       </div>
-      <BottomNav type="client" />
+      {!inviteJob && <BottomNav type="client" />}
     </div>
   );
 };
