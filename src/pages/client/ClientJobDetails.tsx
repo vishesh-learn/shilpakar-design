@@ -134,7 +134,7 @@ const ClientJobDetails: React.FC = () => {
                 <p className="text-xs text-muted-foreground">Invite a worker or wait for someone to accept.</p>
               </div>
             </div>
-            <AppButton onClick={() => navigate("/client/workers")}>
+            <AppButton onClick={() => navigate(`/client/workers?invite=${job.id}`)}>
               <UserPlus size={16} /> Invite a worker
             </AppButton>
             <AppButton
@@ -167,7 +167,7 @@ const ClientJobDetails: React.FC = () => {
               <AppButton variant="outline" size="md" onClick={() => window.open(`tel:${job.workerPhone}`)}>
                 <Phone size={16} /> Call
               </AppButton>
-              <AppButton variant="outline" size="md" onClick={() => navigate("/client/workers")}>
+              <AppButton variant="outline" size="md" onClick={() => navigate(`/client/workers?invite=${job.id}`)}>
                 <UserPlus size={16} /> Invite another
               </AppButton>
             </div>
