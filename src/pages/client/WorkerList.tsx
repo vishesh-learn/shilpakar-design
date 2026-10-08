@@ -41,22 +41,25 @@ const WorkerList: React.FC = () => {
     <div className="mobile-container bg-background min-h-screen pb-24">
       <ScreenHeader title={inviteJob ? "Invite a Worker" : "Workers Nearby"} showBack={!!inviteJob} />
 
-      <div className="px-5 py-4 space-y-3 animate-fade-in">
-        {inviteJob && (
-          <AppCard className="border-2 border-primary bg-card shadow-lg sticky top-16 z-10">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center shrink-0">
-                <Briefcase className="text-primary-foreground" size={20} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-[10px] font-bold text-primary uppercase tracking-wide">Inviting for</p>
-                <h3 className="font-bold text-foreground truncate">{inviteJob.title}</h3>
-                <p className="text-xs text-muted-foreground">{inviteJob.amount} · {inviteJob.location}</p>
-              </div>
+      {inviteJob && (
+        <div className="sticky top-[60px] z-10 w-full bg-primary text-primary-foreground border-b border-primary/40 shadow-md animate-fade-in">
+          <div className="flex items-center gap-3 px-5 py-3">
+            <div className="w-9 h-9 rounded-lg bg-primary-foreground/15 flex items-center justify-center shrink-0">
+              <Briefcase className="text-primary-foreground" size={18} />
             </div>
-          </AppCard>
-        )}
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-primary-foreground/70">Inviting for</p>
+              <h3 className="font-bold leading-tight truncate">{inviteJob.title}</h3>
+            </div>
+            <div className="text-right shrink-0">
+              <p className="font-bold leading-tight">{inviteJob.amount}</p>
+              <p className="text-[11px] text-primary-foreground/70 truncate max-w-[120px]">{inviteJob.location}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
+      <div className="px-5 py-4 space-y-3 animate-fade-in">
         {workers.map((w) => {
           const isInvited = invited.includes(w.id);
           return (
