@@ -50,11 +50,9 @@ const WorkerList: React.FC = () => {
             <div className="flex-1 min-w-0">
               <p className="text-[10px] font-bold uppercase tracking-wider text-primary-foreground/70">Inviting for</p>
               <h3 className="font-bold leading-tight truncate">{inviteJob.title}</h3>
+              <p className="text-[11px] text-primary-foreground/70 truncate">{inviteJob.location}</p>
             </div>
-            <div className="text-right shrink-0">
-              <p className="font-bold leading-tight">{inviteJob.amount}</p>
-              <p className="text-[11px] text-primary-foreground/70 truncate max-w-[120px]">{inviteJob.location}</p>
-            </div>
+            <p className="font-bold leading-tight shrink-0">{inviteJob.amount}</p>
           </div>
         </div>
       )}
