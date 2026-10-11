@@ -6,14 +6,15 @@ import BottomNav from "@/components/BottomNav";
 import AppCard from "@/components/AppCard";
 import ScreenHeader from "@/components/ScreenHeader";
 import { Briefcase, MapPin, Clock } from "lucide-react";
+import { JobStatus, getJobStatusLabel, type JobStatusId } from "@/lib/jobStatus";
 
-const activeJobs = [
+const activeJobs: { id: string; title: string; worker: string; location: string; status: JobStatusId; statusLabel?: string; time: string }[] = [
   {
     id: "1",
     title: "House Cleaning",
     worker: "Ramesh Kumar",
     location: "Andheri West, Mumbai",
-    status: "In Progress",
+    status: JobStatus.inProgress.id,
     time: "Started 2h ago",
   },
   {
@@ -21,7 +22,7 @@ const activeJobs = [
     title: "Plumbing Repair",
     worker: "Suresh Patil",
     location: "Bandra East, Mumbai",
-    status: "On the way",
+    status: JobStatus.workerAssigned.id,
     time: "Arriving in 20 min",
   },
   {
@@ -29,7 +30,7 @@ const activeJobs = [
     title: "Wall Painting",
     worker: "No worker yet",
     location: "Andheri West, Mumbai",
-    status: "Awaiting worker",
+    status: JobStatus.awaitingWorker.id,
     time: "Posted 30 min ago",
   },
   {
@@ -37,7 +38,8 @@ const activeJobs = [
     title: "Furniture Repair",
     worker: "Invited: Vikas Singh",
     location: "Powai, Mumbai",
-    status: "Invite sent",
+    status: JobStatus.awaitingWorker.id,
+    statusLabel: "Invite sent",
     time: "Sent 10 min ago",
   },
 ];
@@ -62,7 +64,7 @@ const ClientActiveJobs: React.FC = () => {
                 </div>
               </div>
               <span className="text-xs font-semibold text-warning bg-warning/10 px-2 py-1 rounded-full">
-                {job.status}
+                {job.statusLabel ?? getJobStatusLabel(job.status)}
               </span>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">

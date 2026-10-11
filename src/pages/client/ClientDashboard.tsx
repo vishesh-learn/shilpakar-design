@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import BottomNav from "@/components/BottomNav";
 import AppCard from "@/components/AppCard";
 import { Briefcase, MapPin, Clock, CheckCircle2, Star, ChevronRight } from "lucide-react";
+import { JobStatus, getJobStatusLabel, type JobStatusId } from "@/lib/jobStatus";
 
-const activeJobsPreview = [
-  { id: "1", title: "House Cleaning", worker: "Ramesh Kumar", location: "Andheri West", status: "In Progress", time: "Started 2h ago" },
-  { id: "2", title: "Plumbing Repair", worker: "Suresh Patil", location: "Bandra East", status: "On the way", time: "Arriving 20 min" },
-  { id: "3", title: "Wall Painting", worker: "No worker yet", location: "Andheri West", status: "Awaiting worker", time: "Posted 30 min ago" },
-  { id: "4", title: "Furniture Repair", worker: "Invited: Vikas Singh", location: "Powai", status: "Invite sent", time: "Sent 10 min ago" },
+const activeJobsPreview: { id: string; title: string; worker: string; location: string; status: JobStatusId; statusLabel?: string; time: string }[] = [
+  { id: "1", title: "House Cleaning", worker: "Ramesh Kumar", location: "Andheri West", status: JobStatus.inProgress.id, time: "Started 2h ago" },
+  { id: "2", title: "Plumbing Repair", worker: "Suresh Patil", location: "Bandra East", status: JobStatus.workerAssigned.id, time: "Arriving 20 min" },
+  { id: "3", title: "Wall Painting", worker: "No worker yet", location: "Andheri West", status: JobStatus.awaitingWorker.id, time: "Posted 30 min ago" },
+  { id: "4", title: "Furniture Repair", worker: "Invited: Vikas Singh", location: "Powai", status: JobStatus.awaitingWorker.id, statusLabel: "Invite sent", time: "Sent 10 min ago" },
 ];
 
 
@@ -60,7 +61,7 @@ const ClientDashboard: React.FC = () => {
                       <p className="text-muted-foreground text-xs">{job.worker}</p>
                     </div>
                   </div>
-                  <span className="text-xs font-semibold text-warning bg-warning/10 px-2 py-1 rounded-full">{job.status}</span>
+                  <span className="text-xs font-semibold text-warning bg-warning/10 px-2 py-1 rounded-full">{job.statusLabel ?? getJobStatusLabel(job.status)}</span>
                 </div>
                 <div className="flex items-center gap-3 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1"><MapPin size={12} />{job.location}</span>
