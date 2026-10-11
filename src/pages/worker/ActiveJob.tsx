@@ -131,7 +131,7 @@ const ActiveJob: React.FC = () => {
               <CalendarDays className="text-primary" size={20} />
             )}
             <span className={started ? "text-success font-semibold text-sm" : "text-primary font-semibold text-sm"}>
-              {started ? "In Progress" : "Assigned"}
+              {started ? JobStatus.inProgress.label : JobStatus.workerAssigned.label}
             </span>
           </div>
           <h2 className="text-lg font-bold text-foreground">{job.title}</h2>
