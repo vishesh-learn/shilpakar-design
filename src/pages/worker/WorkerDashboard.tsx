@@ -4,10 +4,11 @@ import BottomNav from "@/components/BottomNav";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import { Star, MapPin, Clock, CheckCircle, ChevronRight, IndianRupee, CalendarDays } from "lucide-react";
+import { JobStatus, type JobStatusId } from "@/lib/jobStatus";
 
-const activeJobs = [
-  { id: "1", title: "Electrical Wiring", client: "Anil Sharma", location: "Andheri West, Mumbai", status: "In Progress", progress: "Day 2 of 3", path: "/worker/active-job" },
-  { id: "new", title: "Kitchen Tile Work", client: "Meena Joshi", location: "Powai, Mumbai", status: "Assigned", progress: "Starts today, 4:00 PM", path: "/worker/active-job/new" },
+const activeJobs: { id: string; title: string; client: string; location: string; status: JobStatusId; progress: string; path: string }[] = [
+  { id: "1", title: "Electrical Wiring", client: "Anil Sharma", location: "Andheri West, Mumbai", status: JobStatus.inProgress.id, progress: "Day 2 of 3", path: "/worker/active-job" },
+  { id: "new", title: "Kitchen Tile Work", client: "Meena Joshi", location: "Powai, Mumbai", status: JobStatus.workerAssigned.id, progress: "Starts today, 4:00 PM", path: "/worker/active-job/new" },
 ];
 
 
