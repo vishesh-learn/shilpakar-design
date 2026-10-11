@@ -1,3 +1,4 @@
 - [x] Add worker invitation previews and an Invitations view inside Jobs.
 - [x] Add worker apply/accept/decline actions for the two connection paths.
 - [x] Add client application review from unassigned job details.
+- [x] Show a freshly assigned worker job with a "Start job" action before day logging.
