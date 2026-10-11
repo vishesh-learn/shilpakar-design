@@ -4,7 +4,7 @@ import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import BottomNav from "@/components/BottomNav";
-import { JobStatus, JobApplicationOrInvitationStatus } from "@/lib/jobStatus";
+import { JobStatus, JobApplicationOrInvitationStatus, getJobStatusLabel } from "@/lib/jobStatus";
 import { Briefcase, MapPin, Clock, Phone, MessageCircle, CheckCircle2, User, UserPlus, Hourglass, IndianRupee, CalendarDays } from "lucide-react";
 
 const activeJobs: Record<string, any> = {
