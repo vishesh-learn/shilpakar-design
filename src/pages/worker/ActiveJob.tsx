@@ -6,6 +6,7 @@ import AppButton from "@/components/AppButton";
 import BottomNav from "@/components/BottomNav";
 import { MapPin, Phone, Clock, CheckCircle, Pencil, Lock, X, CalendarDays, Play } from "lucide-react";
 import { toast } from "sonner";
+import { JobStatus } from "@/lib/jobStatus";
 
 type LogEntry = {
   id: string;
@@ -131,7 +132,7 @@ const ActiveJob: React.FC = () => {
               <CalendarDays className="text-primary" size={20} />
             )}
             <span className={started ? "text-success font-semibold text-sm" : "text-primary font-semibold text-sm"}>
-              {started ? "In Progress" : "Assigned"}
+              {started ? JobStatus.inProgress.label : JobStatus.workerAssigned.label}
             </span>
           </div>
           <h2 className="text-lg font-bold text-foreground">{job.title}</h2>

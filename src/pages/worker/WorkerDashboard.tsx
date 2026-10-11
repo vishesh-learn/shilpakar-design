@@ -4,10 +4,11 @@ import BottomNav from "@/components/BottomNav";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import { Star, MapPin, Clock, CheckCircle, ChevronRight, IndianRupee, CalendarDays } from "lucide-react";
+import { JobStatus, getJobStatusLabel, type JobStatusId } from "@/lib/jobStatus";
 
-const activeJobs = [
-  { id: "1", title: "Electrical Wiring", client: "Anil Sharma", location: "Andheri West, Mumbai", status: "In Progress", progress: "Day 2 of 3", path: "/worker/active-job" },
-  { id: "new", title: "Kitchen Tile Work", client: "Meena Joshi", location: "Powai, Mumbai", status: "Assigned", progress: "Starts today, 4:00 PM", path: "/worker/active-job/new" },
+const activeJobs: { id: string; title: string; client: string; location: string; status: JobStatusId; progress: string; path: string }[] = [
+  { id: "1", title: "Electrical Wiring", client: "Anil Sharma", location: "Andheri West, Mumbai", status: JobStatus.inProgress.id, progress: "Day 2 of 3", path: "/worker/active-job" },
+  { id: "new", title: "Kitchen Tile Work", client: "Meena Joshi", location: "Powai, Mumbai", status: JobStatus.workerAssigned.id, progress: "Starts today, 4:00 PM", path: "/worker/active-job/new" },
 ];
 
 
@@ -102,22 +103,22 @@ const WorkerDashboard: React.FC = () => {
               <AppCard
                 key={job.id}
                 onClick={() => navigate(job.path)}
-                className={job.status === "In Progress" ? "border-2 !border-success" : "border-2 !border-primary"}
+                className={job.status === JobStatus.inProgress.id ? "border-2 !border-success" : "border-2 !border-primary"}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  {job.status === "In Progress" ? (
+                  {job.status === JobStatus.inProgress.id ? (
                     <CheckCircle className="text-success" size={18} />
                   ) : (
                     <CalendarDays className="text-primary" size={18} />
                   )}
                   <span
                     className={
-                      job.status === "In Progress"
+                      job.status === JobStatus.inProgress.id
                         ? "text-success font-semibold text-sm"
                         : "text-primary font-semibold text-sm"
                     }
                   >
-                    {job.status}
+                    {getJobStatusLabel(job.status)}
                   </span>
                 </div>
                 <h3 className="font-bold text-foreground">{job.title}</h3>
