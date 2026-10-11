@@ -4,6 +4,7 @@ import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import BottomNav from "@/components/BottomNav";
+import { JobStatus, JobApplicationOrInvitationStatus } from "@/lib/jobStatus";
 import { Briefcase, MapPin, Clock, Phone, MessageCircle, CheckCircle2, User, UserPlus, Hourglass, IndianRupee, CalendarDays } from "lucide-react";
 
 const activeJobs: Record<string, any> = {
@@ -16,7 +17,7 @@ const activeJobs: Record<string, any> = {
     rating: 4.8,
     location: "Andheri West, Mumbai",
     fullAddress: "Flat 402, Sunshine Apartments, Andheri West, Mumbai 400058",
-    status: "In Progress",
+    status: JobStatus.inProgress.id,
     time: "Started 2h ago",
     startedAt: "10:30 AM, Today",
     estimatedCompletion: "2:00 PM, Today",
@@ -37,7 +38,7 @@ const activeJobs: Record<string, any> = {
     rating: 4.6,
     location: "Bandra East, Mumbai",
     fullAddress: "Shop 12, Linking Road, Bandra East, Mumbai 400051",
-    status: "On the way",
+    status: JobStatus.workerAssigned.id,
     time: "Arriving in 20 min",
     startedAt: "Scheduled 1:00 PM, Today",
     estimatedCompletion: "3:30 PM, Today",
@@ -52,10 +53,9 @@ const activeJobs: Record<string, any> = {
     id: "3",
     title: "Wall Painting",
     description: "Repaint the living room and bedroom walls. Two coats of emulsion paint; walls to be prepared before painting.",
-    stage: "unassigned",
     location: "Andheri West, Mumbai",
     fullAddress: "Flat 402, Sunshine Apartments, Andheri West, Mumbai 400058",
-    status: "Awaiting worker",
+    status: JobStatus.awaitingWorker.id,
     startedAt: "Posted today, 11:30 AM",
     estimatedCompletion: "Flexible",
     amount: "₹1,500",
@@ -66,13 +66,13 @@ const activeJobs: Record<string, any> = {
     id: "4",
     title: "Furniture Repair",
     description: "Repair a broken wardrobe hinge and fix the loose legs of a dining table. Carpentry experience required.",
-    stage: "invited",
+    invitationStatus: JobApplicationOrInvitationStatus.pending.id,
     worker: "Vikas Singh",
     workerPhone: "+91 98765 44455",
     rating: 4.7,
     location: "Powai, Mumbai",
     fullAddress: "Villa 7, Hiranandani Gardens, Powai, Mumbai 400076",
-    status: "Invite sent",
+    status: JobStatus.awaitingWorker.id,
     startedAt: "Proposed tomorrow, 10:00 AM",
     estimatedCompletion: "Pending acceptance",
     amount: "₹1,000",
