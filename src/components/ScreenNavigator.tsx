@@ -21,6 +21,8 @@ const screens: { group: string; items: { label: string; path: string }[] }[] = [
       { label: "Invitations", path: "/worker/jobs?tab=invitations" },
       { label: "Job Details", path: "/worker/job/1" },
       { label: "Active Job", path: "/worker/active-job" },
+      { label: "Active Job (new)", path: "/worker/active-job/new" },
+
       { label: "Earnings", path: "/worker/earnings" },
       { label: "Profile", path: "/worker/profile" },
     ],

@@ -58,6 +58,8 @@ const App = () => (
           <Route path="/worker/jobs" element={<WorkerJobs />} />
           <Route path="/worker/job/:id" element={<JobDetails />} />
           <Route path="/worker/active-job" element={<ActiveJob />} />
+          <Route path="/worker/active-job/:id" element={<ActiveJob />} />
+
           <Route path="/worker/earnings" element={<EarningsScreen />} />
           <Route path="/worker/profile" element={<WorkerProfile />} />
           <Route path="/worker/edit-profile" element={<WorkerEditProfile />} />

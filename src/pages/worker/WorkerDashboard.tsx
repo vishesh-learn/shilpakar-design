@@ -3,16 +3,13 @@ import { useNavigate } from "react-router-dom";
 import BottomNav from "@/components/BottomNav";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
-import { Star, MapPin, Clock, CheckCircle, ChevronRight, IndianRupee } from "lucide-react";
+import { Star, MapPin, Clock, CheckCircle, ChevronRight, IndianRupee, CalendarDays } from "lucide-react";
 
-const activeJob = {
-  id: "1",
-  title: "Electrical Wiring",
-  client: "Anil Sharma",
-  location: "Andheri West, Mumbai",
-  status: "In Progress",
-  progress: "Day 2 of 3",
-};
+const activeJobs = [
+  { id: "1", title: "Electrical Wiring", client: "Anil Sharma", location: "Andheri West, Mumbai", status: "In Progress", progress: "Day 2 of 3", path: "/worker/active-job" },
+  { id: "new", title: "Kitchen Tile Work", client: "Meena Joshi", location: "Powai, Mumbai", status: "Assigned", progress: "Starts today, 4:00 PM", path: "/worker/active-job/new" },
+];
+
 
 const invitations = [
   { id: "invitation-1", title: "Apartment Electrical Repair", client: "Anil Sharma", location: "Andheri West", wage: "₹800/day", time: "Invited 20 min ago", type: "Electrician" },
@@ -97,32 +94,45 @@ const WorkerDashboard: React.FC = () => {
       </div>
 
       <div className="px-5 pt-6 space-y-6">
-        {/* Active Job */}
+        {/* Active Jobs */}
         <section>
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-bold text-foreground text-lg">Active Job</h2>
-            <button
-              onClick={() => navigate("/worker/active-job")}
-              className="text-primary text-sm font-semibold flex items-center gap-0.5"
-            >
-              View details <ChevronRight size={16} />
-            </button>
+          <h2 className="font-bold text-foreground text-lg mb-3">Active Jobs</h2>
+          <div className="space-y-3">
+            {activeJobs.map((job) => (
+              <AppCard
+                key={job.id}
+                onClick={() => navigate(job.path)}
+                className={job.status === "In Progress" ? "border-2 !border-success" : "border-2 !border-primary"}
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  {job.status === "In Progress" ? (
+                    <CheckCircle className="text-success" size={18} />
+                  ) : (
+                    <CalendarDays className="text-primary" size={18} />
+                  )}
+                  <span
+                    className={
+                      job.status === "In Progress"
+                        ? "text-success font-semibold text-sm"
+                        : "text-primary font-semibold text-sm"
+                    }
+                  >
+                    {job.status}
+                  </span>
+                </div>
+                <h3 className="font-bold text-foreground">{job.title}</h3>
+                <p className="text-muted-foreground text-sm mt-1">{job.client}</p>
+                <div className="flex items-center gap-1 text-sm text-muted-foreground mt-3">
+                  <MapPin size={14} /> {job.location}
+                </div>
+                <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
+                  <Clock size={14} /> {job.progress}
+                </div>
+              </AppCard>
+            ))}
           </div>
-          <AppCard onClick={() => navigate("/worker/active-job")} className="border-2 !border-success">
-            <div className="flex items-center gap-2 mb-3">
-              <CheckCircle className="text-success" size={18} />
-              <span className="text-success font-semibold text-sm">{activeJob.status}</span>
-            </div>
-            <h3 className="font-bold text-foreground">{activeJob.title}</h3>
-            <p className="text-muted-foreground text-sm mt-1">{activeJob.client}</p>
-            <div className="flex items-center gap-1 text-sm text-muted-foreground mt-3">
-              <MapPin size={14} /> {activeJob.location}
-            </div>
-            <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
-              <Clock size={14} /> {activeJob.progress}
-            </div>
-          </AppCard>
         </section>
+
 
         <section>
           <div className="flex items-center justify-between mb-3">
