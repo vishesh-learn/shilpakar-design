@@ -86,6 +86,9 @@ const ClientJobDetails: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const job = activeJobs[id ?? "1"] ?? activeJobs["1"];
+  const isUnassigned = job.status === JobStatus.awaitingWorker.id && !job.invitationStatus;
+  const isInvited = job.status === JobStatus.awaitingWorker.id && job.invitationStatus === JobApplicationOrInvitationStatus.pending.id;
+  const statusLabel = isInvited ? "Invite sent" : getJobStatusLabel(job.status);
 
   return (
     <div className="mobile-container bg-background min-h-screen pb-28">
@@ -103,10 +106,10 @@ const ClientJobDetails: React.FC = () => {
               </div>
             </div>
             <span className="text-xs font-semibold text-warning bg-warning/10 px-2 py-1 rounded-full">
-              {job.status}
+              {statusLabel}
             </span>
           </div>
-          {job.stage !== "unassigned" && job.stage !== "invited" && (
+          {!isUnassigned && !isInvited && (
             <div>
               <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
                 <span>Progress</span>
@@ -122,7 +125,7 @@ const ClientJobDetails: React.FC = () => {
           )}
         </AppCard>
 
-        {job.stage === "unassigned" ? (
+        {isUnassigned ? (
           <AppCard className="space-y-3">
             <h3 className="font-bold text-foreground">Worker</h3>
             <div className="flex items-center gap-3">
@@ -144,7 +147,7 @@ const ClientJobDetails: React.FC = () => {
               View applications
             </AppButton>
           </AppCard>
-        ) : job.stage === "invited" ? (
+        ) : isInvited ? (
           <AppCard className="space-y-3">
             <h3 className="font-bold text-foreground">Invited Worker</h3>
             <div className="flex items-center gap-3">
