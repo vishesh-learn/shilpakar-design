@@ -4,6 +4,7 @@ import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import { pastJobs } from "./WorkerHistory";
 import { CheckCircle2, MapPin, Calendar, Clock, Star, User } from "lucide-react";
+import { JobStatus } from "@/lib/jobStatus";
 
 const WorkerHistoryDetails: React.FC = () => {
   const { id } = useParams();
@@ -22,7 +23,7 @@ const WorkerHistoryDetails: React.FC = () => {
         <AppCard className="space-y-3">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="text-success" size={18} />
-            <span className="text-success font-semibold text-sm">Completed</span>
+            <span className="text-success font-semibold text-sm">{JobStatus.completed.label}</span>
           </div>
           <h2 className="text-xl font-bold text-foreground">{job.title}</h2>
           <div className="space-y-2 text-sm text-muted-foreground">
