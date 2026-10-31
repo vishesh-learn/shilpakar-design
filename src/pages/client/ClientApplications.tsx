@@ -6,6 +6,9 @@ import AppButton from "@/components/AppButton";
 import BottomNav from "@/components/BottomNav";
 import { Star, MapPin, Briefcase, Check, X } from "lucide-react";
 import { toast } from "sonner";
+import { JobApplicationOrInvitationStatus, type ApplicationStatusId } from "@/lib/jobStatus";
+
+const AppStatus = JobApplicationOrInvitationStatus;
 
 interface Applicant {
   id: number;
@@ -57,17 +60,17 @@ const ClientApplications: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [applicants, setApplicants] = useState<Applicant[]>(applicantsByJob[id ?? "3"] ?? applicantsByJob["3"]);
-  const [decisions, setDecisions] = useState<Record<number, "accepted" | "declined">>({});
+  const [decisions, setDecisions] = useState<Record<number, ApplicationStatusId>>({});
 
   const handleAccept = (a: Applicant) => {
-    setDecisions((d) => ({ ...d, [a.id]: "accepted" }));
+    setDecisions((d) => ({ ...d, [a.id]: AppStatus.accepted.id }));
     toast.success(`${a.name} accepted for this job`, {
       description: "They'll be notified and can start as scheduled.",
     });
   };
 
   const handleDecline = (a: Applicant) => {
-    setDecisions((d) => ({ ...d, [a.id]: "declined" }));
+    setDecisions((d) => ({ ...d, [a.id]: AppStatus.declined.id }));
     toast(`${a.name}'s application declined`);
   };
 
@@ -82,7 +85,7 @@ const ClientApplications: React.FC = () => {
         {applicants.map((a) => {
           const decision = decisions[a.id];
           return (
-            <AppCard key={a.id} className={decision === "declined" ? "opacity-50" : ""}>
+            <AppCard key={a.id} className={decision === AppStatus.declined.id ? "opacity-50" : ""}>
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
                   <span className="text-primary font-bold text-lg">
@@ -113,13 +116,13 @@ const ClientApplications: React.FC = () => {
                 </p>
               </div>
 
-              {decision === "accepted" ? (
+              {decision === AppStatus.accepted.id ? (
                 <div className="mt-3 flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 text-success font-semibold">
-                  <Check size={18} /> Accepted
+                  <Check size={18} /> {AppStatus.accepted.label}
                 </div>
-              ) : decision === "declined" ? (
+              ) : decision === AppStatus.declined.id ? (
                 <div className="mt-3 flex items-center justify-center gap-2 py-3 rounded-xl bg-muted text-muted-foreground font-semibold">
-                  <X size={18} /> Declined
+                  <X size={18} /> {AppStatus.declined.label}
                 </div>
               ) : (
                 <div className="flex gap-2 mt-3">
