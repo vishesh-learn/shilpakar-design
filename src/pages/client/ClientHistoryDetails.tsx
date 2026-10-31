@@ -5,6 +5,7 @@ import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import BottomNav from "@/components/BottomNav";
 import { CheckCircle2, MapPin, CalendarDays, Clock, IndianRupee, User, Phone, Star, Receipt, RotateCcw } from "lucide-react";
+import { JobStatus } from "@/lib/jobStatus";
 
 const historyJobs: Record<string, any> = {
   "5": {
@@ -138,7 +139,7 @@ const ClientHistoryDetails: React.FC = () => {
               </div>
             </div>
             <span className="text-xs font-semibold text-success bg-success/10 px-2 py-1 rounded-full">
-              Completed
+              {JobStatus.completed.label}
             </span>
           </div>
         </AppCard>
