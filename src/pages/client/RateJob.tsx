@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
+import FieldError, { triggerShake } from "@/components/FieldError";
 import { Star, Briefcase, Info } from "lucide-react";
 
 const RateJob: React.FC = () => {
@@ -78,7 +79,16 @@ const RateJob: React.FC = () => {
       </div>
 
       <div className="px-5 pb-8">
-        <AppButton onClick={() => navigate("/client/dashboard")} disabled={rating === 0}>
+        <AppButton
+          onClick={() => {
+            if (rating === 0) {
+              setError("Tap the stars to rate this job");
+              triggerShake(setShake);
+              return;
+            }
+            navigate("/client/dashboard");
+          }}
+        >
           {isUpdate ? "Update Rating" : "Submit Rating"}
         </AppButton>
       </div>
