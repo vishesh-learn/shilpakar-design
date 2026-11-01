@@ -17,6 +17,8 @@ const RateJob: React.FC = () => {
   const isUpdate = (job.rating ?? 0) > 0;
   const [rating, setRating] = useState(job.rating ?? 0);
   const [review, setReview] = useState(job.review ?? "");
+  const [error, setError] = useState<string | null>(null);
+  const [shake, setShake] = useState(false);
 
 
   return (
@@ -33,9 +35,17 @@ const RateJob: React.FC = () => {
 
         <AppCard className="flex flex-col items-center gap-4">
           <p className="font-semibold text-foreground">How was this job done?</p>
-          <div className="flex gap-2">
+          <div className={`flex gap-2 ${shake ? "animate-shake" : ""}`}>
             {[1, 2, 3, 4, 5].map((s) => (
-              <button key={s} onClick={() => setRating(s)} className="p-1" aria-label={`${s} star`}>
+              <button
+                key={s}
+                onClick={() => {
+                  setRating(s);
+                  if (error) setError(null);
+                }}
+                className="p-1"
+                aria-label={`${s} star`}
+              >
                 <Star
                   size={36}
                   className={s <= rating ? "text-warning" : "text-border"}
@@ -44,6 +54,7 @@ const RateJob: React.FC = () => {
               </button>
             ))}
           </div>
+          <FieldError message={error} className="justify-center mt-0" />
           <p className="text-muted-foreground text-sm">
             {rating === 0 ? "Tap to rate" : rating <= 2 ? "Poor" : rating <= 3 ? "Average" : rating === 4 ? "Good" : "Excellent!"}
           </p>
