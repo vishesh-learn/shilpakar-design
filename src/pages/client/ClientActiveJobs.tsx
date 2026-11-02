@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 
 import BottomNav from "@/components/BottomNav";
+import { SkeletonList } from "@/components/Skeleton";
+import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
 import AppCard from "@/components/AppCard";
 import ScreenHeader from "@/components/ScreenHeader";
 import { Briefcase, MapPin, Clock } from "lucide-react";
@@ -47,11 +49,12 @@ const activeJobs: { id: string; title: string; worker: string; location: string;
 
 const ClientActiveJobs: React.FC = () => {
   const navigate = useNavigate();
+  const loading = useSimulatedLoading();
   return (
     <div className="mobile-container bg-background min-h-screen pb-24">
       <ScreenHeader title="Active Jobs" />
       <div className="px-5 pt-4 space-y-3 animate-fade-in">
-        {activeJobs.map((job) => (
+        {loading ? <SkeletonList count={4} /> : activeJobs.map((job) => (
           <AppCard key={job.id} onClick={() => navigate(`/client/active-job/${job.id}`)} className="space-y-3">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">

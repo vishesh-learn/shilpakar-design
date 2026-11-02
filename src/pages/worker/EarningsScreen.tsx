@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import BottomNav from "@/components/BottomNav";
+import { SkeletonList } from "@/components/Skeleton";
+import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
 import { IndianRupee, TrendingUp, Calendar } from "lucide-react";
 
 const EarningsScreen: React.FC = () => {
   const navigate = useNavigate();
+  const loading = useSimulatedLoading();
   const earnings = [
     { job: "Electrical Wiring", client: "Anil Sharma", amount: "₹2,400", days: "3 days", date: "Feb 10" },
     { job: "Fan Installation", client: "Priya Patel", amount: "₹800", days: "1 day", date: "Feb 8" },
@@ -48,7 +51,7 @@ const EarningsScreen: React.FC = () => {
             Work history
           </button>
         </div>
-        {earnings.map((e, i) => (
+        {loading ? <SkeletonList count={3} /> : earnings.map((e, i) => (
           <AppCard key={i}>
             <div className="flex items-center justify-between">
               <div>

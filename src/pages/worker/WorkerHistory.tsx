@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import BottomNav from "@/components/BottomNav";
+import { SkeletonList } from "@/components/Skeleton";
+import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
 import { CheckCircle2, Star } from "lucide-react";
 
 export const pastJobs = [
@@ -14,12 +16,13 @@ export const pastJobs = [
 
 const WorkerHistory: React.FC = () => {
   const navigate = useNavigate();
+  const loading = useSimulatedLoading();
 
   return (
     <div className="mobile-container bg-background min-h-screen pb-24">
       <ScreenHeader title="Work History" />
       <div className="px-5 pt-4 space-y-3 animate-fade-in">
-        {pastJobs.map((job) => (
+        {loading ? <SkeletonList count={4} /> : pastJobs.map((job) => (
           <AppCard key={job.id} onClick={() => navigate(`/worker/history/${job.id}`)} className="space-y-2">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">

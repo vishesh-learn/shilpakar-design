@@ -3,15 +3,22 @@ import { useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
+import { SkeletonProfile } from "@/components/Skeleton";
+import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
 import { User, MapPin, Star, Hammer, Phone, Briefcase } from "lucide-react";
 
 const WorkerProfileView: React.FC = () => {
   const navigate = useNavigate();
+  const loading = useSimulatedLoading();
 
   return (
     <div className="mobile-container bg-background min-h-screen flex flex-col">
       <ScreenHeader title="Worker Profile" />
       <div className="flex-1 px-5 py-6 space-y-4 animate-fade-in">
+        {loading ? (
+          <SkeletonProfile />
+        ) : (
+          <>
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full bg-accent flex items-center justify-center mb-3">
             <User className="text-primary" size={40} />
@@ -71,6 +78,8 @@ const WorkerProfileView: React.FC = () => {
             </div>
           ))}
         </AppCard>
+          </>
+        )}
       </div>
 
       <div className="px-5 pb-8">

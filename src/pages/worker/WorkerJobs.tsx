@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import BottomNav from "@/components/BottomNav";
+import { SkeletonList } from "@/components/Skeleton";
+import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
 import { MapPin, Clock, IndianRupee } from "lucide-react";
 
 const jobs = [
@@ -19,6 +21,7 @@ const invitations = [
 
 const WorkerJobs: React.FC = () => {
   const navigate = useNavigate();
+  const loading = useSimulatedLoading();
   const [searchParams, setSearchParams] = useSearchParams();
   const showInvitations = searchParams.get("tab") === "invitations";
   const visibleJobs = showInvitations ? invitations : jobs;
@@ -43,7 +46,7 @@ const WorkerJobs: React.FC = () => {
         </div>
       </div>
       <div className="px-5 py-4 space-y-3 animate-fade-in">
-        {visibleJobs.map((job) => (
+        {loading ? <SkeletonList count={4} /> : visibleJobs.map((job) => (
           <AppCard key={job.id} onClick={() => navigate(`/worker/job/${job.id}`)}>
             <div className="flex items-start justify-between mb-2">
               <div>

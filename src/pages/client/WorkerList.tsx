@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import BottomNav from "@/components/BottomNav";
+import { SkeletonList } from "@/components/Skeleton";
+import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
 import { Star, MapPin, Plus, Check, Briefcase } from "lucide-react";
 import { toast } from "sonner";
 
@@ -27,6 +29,7 @@ const WorkerList: React.FC = () => {
   const inviteJobId = searchParams.get("invite");
   const inviteJob = inviteJobId ? inviteJobs[inviteJobId] : undefined;
   const [invited, setInvited] = useState<number[]>([]);
+  const loading = useSimulatedLoading();
 
   const handleInvite = (e: React.MouseEvent, workerId: number, workerName: string) => {
     e.stopPropagation();
@@ -58,7 +61,7 @@ const WorkerList: React.FC = () => {
       )}
 
       <div className="px-5 py-4 space-y-3 animate-fade-in">
-        {workers.map((w) => {
+        {loading ? <SkeletonList count={5} /> : workers.map((w) => {
           const isInvited = invited.includes(w.id);
           return (
             <AppCard key={w.id} onClick={() => navigate(`/client/worker/${w.id}`)}>

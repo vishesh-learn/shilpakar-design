@@ -4,10 +4,13 @@ import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import BottomNav from "@/components/BottomNav";
+import { SkeletonProfile } from "@/components/Skeleton";
+import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
 import { Building2, MapPin, Phone, LogOut } from "lucide-react";
 
 const ClientProfile: React.FC = () => {
   const navigate = useNavigate();
+  const loading = useSimulatedLoading();
 
   const handleLogout = () => {
     localStorage.removeItem("userRole");
@@ -17,6 +20,10 @@ const ClientProfile: React.FC = () => {
     <div className="mobile-container bg-background min-h-screen pb-24">
       <ScreenHeader title="Profile" showBack={false} />
       <div className="px-5 py-6 space-y-4 animate-fade-in">
+        {loading ? (
+          <SkeletonProfile />
+        ) : (
+          <>
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full bg-accent flex items-center justify-center mb-3">
             <Building2 className="text-primary" size={40} />
@@ -65,6 +72,8 @@ const ClientProfile: React.FC = () => {
         <AppButton variant="ghost" className="text-destructive" onClick={handleLogout}>
           <LogOut size={18} /> Logout
         </AppButton>
+          </>
+        )}
       </div>
       <BottomNav type="client" />
     </div>
