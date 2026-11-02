@@ -5,6 +5,8 @@ import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import { Star, MapPin, Clock, CheckCircle, ChevronRight, IndianRupee, CalendarDays } from "lucide-react";
 import { JobStatus, getJobStatusLabel, type JobStatusId } from "@/lib/jobStatus";
+import { SkeletonList } from "@/components/Skeleton";
+import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
 
 const activeJobs: { id: string; title: string; client: string; location: string; status: JobStatusId; progress: string; path: string }[] = [
   { id: "1", title: "Electrical Wiring", client: "Anil Sharma", location: "Andheri West, Mumbai", status: JobStatus.inProgress.id, progress: "Day 2 of 3", path: "/worker/active-job" },
@@ -52,6 +54,7 @@ const StarRating = ({ rating, size = 14 }: { rating: number; size?: number }) =>
 const WorkerDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [available, setAvailable] = useState(true);
+  const loading = useSimulatedLoading();
 
   return (
     <div className="mobile-container bg-background min-h-screen pb-24">
@@ -99,7 +102,7 @@ const WorkerDashboard: React.FC = () => {
         <section>
           <h2 className="font-bold text-foreground text-lg mb-3">Active Jobs</h2>
           <div className="space-y-3">
-            {activeJobs.map((job) => (
+            {loading ? <SkeletonList count={2} /> : activeJobs.map((job) => (
               <AppCard
                 key={job.id}
                 onClick={() => navigate(job.path)}
@@ -146,7 +149,7 @@ const WorkerDashboard: React.FC = () => {
             </button>
           </div>
           <div className="space-y-3">
-            {invitations.map((job) => (
+            {loading ? <SkeletonList count={2} /> : invitations.map((job) => (
               <AppCard key={job.id} onClick={() => navigate(`/worker/job/${job.id}`)}>
                 <div className="flex items-start justify-between mb-2 gap-2">
                   <div>
@@ -177,7 +180,7 @@ const WorkerDashboard: React.FC = () => {
             </button>
           </div>
           <div className="space-y-3">
-            {nearbyJobs.map((job) => (
+            {loading ? <SkeletonList count={2} /> : nearbyJobs.map((job) => (
               <AppCard key={job.id} onClick={() => navigate(`/worker/job/${job.id}`)}>
                 <div className="flex items-start justify-between mb-2">
                   <div>
@@ -212,7 +215,7 @@ const WorkerDashboard: React.FC = () => {
             </button>
           </div>
           <div className="space-y-3">
-            {newJobs.map((job) => (
+            {loading ? <SkeletonList count={3} /> : newJobs.map((job) => (
               <AppCard key={job.id} onClick={() => navigate(`/worker/job/${job.id}`)}>
                 <div className="flex items-start justify-between mb-2">
                   <div>

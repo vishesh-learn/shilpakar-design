@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import BottomNav from "@/components/BottomNav";
 import AppCard from "@/components/AppCard";
 import { Briefcase, MapPin, Clock, CheckCircle2, Star, ChevronRight } from "lucide-react";
+import { SkeletonList } from "@/components/Skeleton";
+import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
 import { JobStatus, getJobStatusLabel, type JobStatusId } from "@/lib/jobStatus";
 
 const activeJobsPreview: { id: string; title: string; worker: string; location: string; status: JobStatusId; statusLabel?: string; time: string }[] = [
@@ -21,6 +23,7 @@ const historyPreview = [
 
 const ClientDashboard: React.FC = () => {
   const navigate = useNavigate();
+  const loading = useSimulatedLoading();
 
   return (
     <div className="mobile-container bg-background min-h-screen pb-24">
@@ -49,7 +52,7 @@ const ClientDashboard: React.FC = () => {
             </button>
           </div>
           <div className="space-y-3">
-            {activeJobsPreview.map((job) => (
+            {loading ? <SkeletonList count={4} /> : activeJobsPreview.map((job) => (
               <AppCard key={job.id} onClick={() => navigate(`/client/active-job/${job.id}`)} className="space-y-2">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
@@ -84,7 +87,7 @@ const ClientDashboard: React.FC = () => {
             </button>
           </div>
           <div className="space-y-3">
-            {historyPreview.map((job) => (
+            {loading ? <SkeletonList count={3} /> : historyPreview.map((job) => (
               <AppCard key={job.id} onClick={() => navigate(`/client/history/${job.id}`)} className="space-y-2">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
