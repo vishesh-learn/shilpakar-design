@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import AppButton from "@/components/AppButton";
 import FieldError, { triggerShake } from "@/components/FieldError";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useSimulatedAction } from "@/hooks/useSimulatedLoading";
 import { Phone, ArrowLeft, RefreshCw } from "lucide-react";
 
 // Demo verification code — replace with real backend verification when connected.
@@ -23,6 +24,9 @@ const LoginScreen: React.FC = () => {
   const [attempts, setAttempts] = useState(MAX_ATTEMPTS);
   const [locked, setLocked] = useState(false);
   const [resendIn, setResendIn] = useState(0);
+  const [sending, runSend] = useSimulatedAction(800);
+  const [verifying, runVerify] = useSimulatedAction(900);
+  const [resending, runResend] = useSimulatedAction(800);
   const otpRefs = useRef<Array<HTMLInputElement | null>>([]);
 
   useEffect(() => {
@@ -32,62 +36,70 @@ const LoginScreen: React.FC = () => {
   }, [resendIn]);
 
   const handleSendOtp = () => {
+    if (sending) return;
     if (phone.length !== 10) {
       setPhoneError("Enter a valid 10-digit mobile number");
       triggerShake(setShakePhone);
       return;
     }
     setPhoneError(null);
-    setOtpSent(true);
-    setOtp("");
-    setOtpError(null);
-    setAttempts(MAX_ATTEMPTS);
-    setLocked(false);
-    setResendIn(RESEND_SECONDS);
-    setTimeout(() => otpRefs.current[0]?.focus(), 100);
+    runSend(() => {
+      setOtpSent(true);
+      setOtp("");
+      setOtpError(null);
+      setAttempts(MAX_ATTEMPTS);
+      setLocked(false);
+      setResendIn(RESEND_SECONDS);
+      setTimeout(() => otpRefs.current[0]?.focus(), 100);
+    });
   };
 
   const handleResend = () => {
-    setOtp("");
-    setOtpError(null);
-    setAttempts(MAX_ATTEMPTS);
-    setLocked(false);
-    setResendIn(RESEND_SECONDS);
-    setTimeout(() => otpRefs.current[0]?.focus(), 100);
-    toast.info(`New OTP sent to +91 ${phone}`, {
-      description: `Demo code: ${DEMO_OTP}`,
+    if (resending) return;
+    runResend(() => {
+      setOtp("");
+      setOtpError(null);
+      setAttempts(MAX_ATTEMPTS);
+      setLocked(false);
+      setResendIn(RESEND_SECONDS);
+      setTimeout(() => otpRefs.current[0]?.focus(), 100);
+      toast.info(`New OTP sent to +91 ${phone}`, {
+        description: `Demo code: ${DEMO_OTP}`,
+      });
     });
   };
 
   const handleVerify = () => {
-    if (locked) return;
+    if (locked || verifying) return;
     if (otp.length < 4) {
       setOtpError("Enter the 4-digit code");
       triggerShake(setShakeOtp);
       return;
     }
-    if (otp !== DEMO_OTP) {
-      const left = attempts - 1;
-      setAttempts(left);
-      setOtp("");
-      if (left <= 0) {
-        setLocked(true);
-        setOtpError("Too many incorrect attempts. Resend a new OTP to try again.");
-      } else {
-        setOtpError(`Incorrect OTP. ${left} ${left === 1 ? "attempt" : "attempts"} left.`);
+    runVerify(() => {
+      if (otp !== DEMO_OTP) {
+        const left = attempts - 1;
+        setAttempts(left);
+        setOtp("");
+        if (left <= 0) {
+          setLocked(true);
+          setOtpError("Too many incorrect attempts. Resend a new OTP to try again.");
+        } else {
+          setOtpError(`Incorrect OTP. ${left} ${left === 1 ? "attempt" : "attempts"} left.`);
+        }
+        triggerShake(setShakeOtp);
+        return;
       }
-      triggerShake(setShakeOtp);
-      return;
-    }
-    setOtpError(null);
-    const savedRole = localStorage.getItem("userRole");
-    if (savedRole === "client") {
-      navigate("/client/dashboard");
-    } else if (savedRole === "worker") {
-      navigate("/worker/dashboard");
-    } else {
-      navigate("/role");
-    }
+      setOtpError(null);
+      const savedRole = localStorage.getItem("userRole");
+      if (savedRole === "client") {
+        navigate("/client/dashboard");
+      } else if (savedRole === "worker") {
+        navigate("/worker/dashboard");
+      } else {
+        navigate("/role");
+      }
+    });
   };
 
   const handleOtpChange = (i: number, raw: string) => {
@@ -164,8 +176,8 @@ const LoginScreen: React.FC = () => {
               </div>
               <FieldError message={phoneError} />
             </div>
-            <AppButton onClick={handleSendOtp}>
-              Send OTP
+            <AppButton onClick={handleSendOtp} loading={sending}>
+              {sending ? "Sending OTP" : "Send OTP"}
             </AppButton>
           </div>
         ) : (
@@ -190,8 +202,8 @@ const LoginScreen: React.FC = () => {
               ))}
             </div>
             <FieldError message={otpError} className="justify-center" />
-            <AppButton onClick={handleVerify} disabled={locked || otp.length < 4}>
-              {locked ? "Try again after resend" : "Verify OTP"}
+            <AppButton onClick={handleVerify} loading={verifying} disabled={locked}>
+              {verifying ? "Verifying" : locked ? "Try again after resend" : "Verify OTP"}
             </AppButton>
             <div className="text-center text-sm space-y-2">
               {resendIn > 0 ? (
@@ -201,10 +213,11 @@ const LoginScreen: React.FC = () => {
               ) : (
                 <button
                   onClick={handleResend}
-                  className="text-primary font-medium inline-flex items-center gap-1.5"
+                  disabled={resending}
+                  className="text-primary font-medium inline-flex items-center gap-1.5 disabled:opacity-50"
                 >
-                  <RefreshCw size={14} />
-                  Resend OTP
+                  <RefreshCw size={14} className={resending ? "animate-spin" : ""} />
+                  {resending ? "Sending" : "Resend OTP"}
                 </button>
               )}
               <button

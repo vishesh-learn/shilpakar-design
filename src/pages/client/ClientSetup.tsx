@@ -4,6 +4,7 @@ import ScreenHeader from "@/components/ScreenHeader";
 import AppButton from "@/components/AppButton";
 import ExitOnboardingButton from "@/components/ExitOnboardingButton";
 import FieldError, { triggerShake } from "@/components/FieldError";
+import { useSimulatedAction } from "@/hooks/useSimulatedLoading";
 import { User, MapPin, Building2 } from "lucide-react";
 
 interface Errors {
@@ -19,6 +20,8 @@ const ClientSetup: React.FC = () => {
   const [errors, setErrors] = useState<Errors>({});
   const [shake, setShake] = useState(false);
 
+  const [saving, runSave] = useSimulatedAction();
+
   const handleSubmit = () => {
     const next: Errors = {};
     if (!name.trim()) next.name = "Please enter your full name";
@@ -28,8 +31,10 @@ const ClientSetup: React.FC = () => {
       triggerShake(setShake);
       return;
     }
-    localStorage.setItem("userRole", "client");
-    navigate("/client/dashboard");
+    runSave(() => {
+      localStorage.setItem("userRole", "client");
+      navigate("/client/dashboard");
+    });
   };
 
   return (
@@ -91,8 +96,8 @@ const ClientSetup: React.FC = () => {
       </div>
 
       <div className="px-5 pb-8">
-        <AppButton onClick={handleSubmit}>
-          Complete Setup
+        <AppButton onClick={handleSubmit} loading={saving}>
+          {saving ? "Setting up" : "Complete Setup"}
         </AppButton>
       </div>
     </div>

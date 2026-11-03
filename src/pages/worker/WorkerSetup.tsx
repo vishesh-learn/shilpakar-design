@@ -4,6 +4,7 @@ import ScreenHeader from "@/components/ScreenHeader";
 import AppButton from "@/components/AppButton";
 import ExitOnboardingButton from "@/components/ExitOnboardingButton";
 import FieldError, { triggerShake } from "@/components/FieldError";
+import { useSimulatedAction } from "@/hooks/useSimulatedLoading";
 import { User, MapPin, Hammer } from "lucide-react";
 
 const skills = ["Carpenter", "Electrician", "Plumber", "Mason", "Helper", "Painter", "Welder"];
@@ -29,6 +30,8 @@ const WorkerSetup: React.FC = () => {
     if (errors.skills) setErrors((e) => ({ ...e, skills: undefined }));
   };
 
+  const [saving, runSave] = useSimulatedAction();
+
   const handleSubmit = () => {
     const next: Errors = {};
     if (!name.trim()) next.name = "Please enter your full name";
@@ -39,8 +42,10 @@ const WorkerSetup: React.FC = () => {
       triggerShake(setShake);
       return;
     }
-    localStorage.setItem("userRole", "worker");
-    navigate("/worker/dashboard");
+    runSave(() => {
+      localStorage.setItem("userRole", "worker");
+      navigate("/worker/dashboard");
+    });
   };
 
   return (
@@ -119,8 +124,8 @@ const WorkerSetup: React.FC = () => {
       </div>
 
       <div className="px-5 pb-8">
-        <AppButton onClick={handleSubmit}>
-          Complete Setup
+        <AppButton onClick={handleSubmit} loading={saving}>
+          {saving ? "Setting up" : "Complete Setup"}
         </AppButton>
       </div>
     </div>
