@@ -1,15 +1,18 @@
 import React from "react";
+import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AppButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "success" | "destructive";
   size?: "sm" | "md" | "lg" | "xl";
   fullWidth?: boolean;
+  /** Shows an inline spinner and disables the button while the action is running. */
+  loading?: boolean;
   children: React.ReactNode;
 }
 
 const AppButton = React.forwardRef<HTMLButtonElement, AppButtonProps>(
-  ({ variant = "primary", size = "lg", fullWidth = true, className, children, ...props }, ref) => {
+  ({ variant = "primary", size = "lg", fullWidth = true, loading = false, className, children, disabled, ...props }, ref) => {
     const variants = {
       primary: "bg-primary text-primary-foreground hover:opacity-90 active:opacity-80",
       secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -28,16 +31,22 @@ const AppButton = React.forwardRef<HTMLButtonElement, AppButtonProps>(
     return (
       <button
         ref={ref}
+        disabled={disabled || loading}
+        aria-busy={loading || undefined}
         className={cn(
           "font-semibold transition-all duration-200 flex items-center justify-center gap-2",
           variants[variant],
           sizes[size],
           fullWidth && "w-full",
           "disabled:opacity-50 disabled:cursor-not-allowed",
+          loading && "cursor-wait",
           className
         )}
         {...props}
       >
+        {loading && (
+          <Loader2 size={size === "sm" ? 16 : 20} className="animate-spin shrink-0" aria-hidden="true" />
+        )}
         {children}
       </button>
     );
