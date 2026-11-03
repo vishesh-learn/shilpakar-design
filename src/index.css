@@ -99,6 +99,11 @@
   80% { transform: translateX(4px); }
 }
 
+/* Admin screens use their own sidebar; drop the dev navigator's left offset */
+body:has(.admin-shell) {
+  padding-left: 0;
+}
+
 @layer utilities {
   .animate-shake {
     animation: shake 0.4s ease-in-out;
