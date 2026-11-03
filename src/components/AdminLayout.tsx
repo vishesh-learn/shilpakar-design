@@ -7,7 +7,7 @@ import { Bell } from "lucide-react";
 const AdminLayout: React.FC = () => {
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-secondary">
+      <div className="admin-shell min-h-screen flex w-full bg-secondary">
         <AdminSidebar />
         <div className="flex-1 flex flex-col min-w-0">
           <header className="h-14 bg-card border-b border-border flex items-center justify-between px-4 sticky top-0 z-10">
