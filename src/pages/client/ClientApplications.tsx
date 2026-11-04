@@ -61,18 +61,26 @@ const ClientApplications: React.FC = () => {
   const navigate = useNavigate();
   const [applicants, setApplicants] = useState<Applicant[]>(applicantsByJob[id ?? "3"] ?? applicantsByJob["3"]);
   const [decisions, setDecisions] = useState<Record<number, ApplicationStatusId>>({});
+  const [pendingId, setPendingId] = useState<number | null>(null);
 
-  const handleAccept = (a: Applicant) => {
-    setDecisions((d) => ({ ...d, [a.id]: AppStatus.accepted.id }));
-    toast.success(`${a.name} accepted for this job`, {
-      description: "They'll be notified and can start as scheduled.",
-    });
+  const decide = (a: Applicant, decision: ApplicationStatusId) => {
+    if (pendingId !== null) return;
+    setPendingId(a.id);
+    window.setTimeout(() => {
+      setPendingId(null);
+      setDecisions((d) => ({ ...d, [a.id]: decision }));
+      if (decision === AppStatus.accepted.id) {
+        toast.success(`${a.name} accepted for this job`, {
+          description: "They'll be notified and can start as scheduled.",
+        });
+      } else {
+        toast(`${a.name}'s application declined`);
+      }
+    }, 900);
   };
 
-  const handleDecline = (a: Applicant) => {
-    setDecisions((d) => ({ ...d, [a.id]: AppStatus.declined.id }));
-    toast(`${a.name}'s application declined`);
-  };
+  const handleAccept = (a: Applicant) => decide(a, AppStatus.accepted.id);
+  const handleDecline = (a: Applicant) => decide(a, AppStatus.declined.id);
 
   return (
     <div className="mobile-container bg-background min-h-screen pb-28">
@@ -126,11 +134,11 @@ const ClientApplications: React.FC = () => {
                 </div>
               ) : (
                 <div className="flex gap-2 mt-3">
-                  <AppButton variant="outline" size="md" onClick={() => handleDecline(a)}>
-                    <X size={16} /> Decline
+                  <AppButton variant="outline" size="md" loading={pendingId === a.id} onClick={() => handleDecline(a)}>
+                    <X size={16} /> {pendingId === a.id ? "…" : "Decline"}
                   </AppButton>
-                  <AppButton size="md" onClick={() => handleAccept(a)}>
-                    <Check size={16} /> Accept
+                  <AppButton size="md" loading={pendingId === a.id} onClick={() => handleAccept(a)}>
+                    <Check size={16} /> {pendingId === a.id ? "…" : "Accept"}
                   </AppButton>
                 </div>
               )}

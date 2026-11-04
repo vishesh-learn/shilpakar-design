@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppButton from "@/components/AppButton";
 import FieldError, { triggerShake } from "@/components/FieldError";
+import { useSimulatedAction } from "@/hooks/useSimulatedLoading";
 import { User, MapPin, Phone, Hammer } from "lucide-react";
 
 const skillOptions = ["Carpenter", "Electrician", "Plumber", "Mason", "Helper", "Painter", "Welder"];
@@ -30,6 +31,8 @@ const WorkerEditProfile: React.FC = () => {
     if (errors.skills) setErrors((e) => ({ ...e, skills: undefined }));
   };
 
+  const [saving, runSave] = useSimulatedAction();
+
   const handleSubmit = () => {
     const next: Errors = {};
     if (!name.trim()) next.name = "Please enter your full name";
@@ -41,7 +44,7 @@ const WorkerEditProfile: React.FC = () => {
       triggerShake(setShake);
       return;
     }
-    navigate("/worker/profile");
+    runSave(() => navigate("/worker/profile"));
   };
 
   return (
@@ -136,8 +139,8 @@ const WorkerEditProfile: React.FC = () => {
       </div>
 
       <div className="px-5 pb-8">
-        <AppButton onClick={handleSubmit}>
-          Save Changes
+        <AppButton onClick={handleSubmit} loading={saving}>
+          {saving ? "Saving" : "Save Changes"}
         </AppButton>
       </div>
     </div>

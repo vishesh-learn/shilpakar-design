@@ -5,7 +5,7 @@ import AppCard from "@/components/AppCard";
 import BottomNav from "@/components/BottomNav";
 import { SkeletonList } from "@/components/Skeleton";
 import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
-import { Star, MapPin, Plus, Check, Briefcase } from "lucide-react";
+import { Star, MapPin, Plus, Check, Briefcase, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 const workers = [
@@ -29,15 +29,20 @@ const WorkerList: React.FC = () => {
   const inviteJobId = searchParams.get("invite");
   const inviteJob = inviteJobId ? inviteJobs[inviteJobId] : undefined;
   const [invited, setInvited] = useState<number[]>([]);
+  const [invitingId, setInvitingId] = useState<number | null>(null);
   const loading = useSimulatedLoading();
 
   const handleInvite = (e: React.MouseEvent, workerId: number, workerName: string) => {
     e.stopPropagation();
-    if (invited.includes(workerId)) return;
-    setInvited((prev) => [...prev, workerId]);
-    toast.success(`Invite sent to ${workerName}`, {
-      description: inviteJob ? `For "${inviteJob.title}"` : undefined,
-    });
+    if (invited.includes(workerId) || invitingId !== null) return;
+    setInvitingId(workerId);
+    window.setTimeout(() => {
+      setInvitingId(null);
+      setInvited((prev) => [...prev, workerId]);
+      toast.success(`Invite sent to ${workerName}`, {
+        description: inviteJob ? `For "${inviteJob.title}"` : undefined,
+      });
+    }, 700);
   };
 
   return (
@@ -81,7 +86,8 @@ const WorkerList: React.FC = () => {
                 {inviteJob && (
                   <button
                     onClick={(e) => handleInvite(e, w.id, w.name)}
-                    disabled={isInvited}
+                    disabled={isInvited || invitingId === w.id}
+                    aria-busy={invitingId === w.id || undefined}
                     aria-label={isInvited ? `Invited ${w.name}` : `Invite ${w.name}`}
                     className={`w-11 h-11 rounded-full flex items-center justify-center shrink-0 transition-all duration-200 ${
                       isInvited
@@ -89,7 +95,13 @@ const WorkerList: React.FC = () => {
                         : "bg-primary text-primary-foreground hover:opacity-90 active:scale-90"
                     }`}
                   >
-                    {isInvited ? <Check size={20} /> : <Plus size={20} />}
+                    {isInvited ? (
+                      <Check size={20} />
+                    ) : invitingId === w.id ? (
+                      <Loader2 size={20} className="animate-spin" aria-hidden="true" />
+                    ) : (
+                      <Plus size={20} />
+                    )}
                   </button>
                 )}
               </div>

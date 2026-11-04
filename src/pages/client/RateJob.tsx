@@ -4,6 +4,7 @@ import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import FieldError, { triggerShake } from "@/components/FieldError";
+import { useSimulatedAction } from "@/hooks/useSimulatedLoading";
 import { Star, Briefcase, Info } from "lucide-react";
 
 const RateJob: React.FC = () => {
@@ -20,6 +21,7 @@ const RateJob: React.FC = () => {
   const [review, setReview] = useState(job.review ?? "");
   const [error, setError] = useState<string | null>(null);
   const [shake, setShake] = useState(false);
+  const [submitting, runSubmit] = useSimulatedAction();
 
 
   return (
@@ -80,16 +82,17 @@ const RateJob: React.FC = () => {
 
       <div className="px-5 pb-8">
         <AppButton
+          loading={submitting}
           onClick={() => {
             if (rating === 0) {
               setError("Tap the stars to rate this job");
               triggerShake(setShake);
               return;
             }
-            navigate("/client/dashboard");
+            runSubmit(() => navigate("/client/dashboard"));
           }}
         >
-          {isUpdate ? "Update Rating" : "Submit Rating"}
+          {submitting ? "Submitting" : isUpdate ? "Update Rating" : "Submit Rating"}
         </AppButton>
       </div>
     </div>

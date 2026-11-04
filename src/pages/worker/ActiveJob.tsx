@@ -4,7 +4,8 @@ import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import BottomNav from "@/components/BottomNav";
-import { MapPin, Phone, Clock, CheckCircle, Pencil, Lock, X, CalendarDays, Play } from "lucide-react";
+import { useSimulatedAction } from "@/hooks/useSimulatedLoading";
+import { MapPin, Phone, Clock, CheckCircle, Pencil, Lock, X, CalendarDays } from "lucide-react";
 import { toast } from "sonner";
 import { JobStatus } from "@/lib/jobStatus";
 
@@ -64,6 +65,8 @@ const ActiveJob: React.FC = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [note, setNote] = useState("");
+  const [starting, runStart] = useSimulatedAction();
+  const [savingLog, runSaveLog] = useSimulatedAction();
 
   useEffect(() => {
     setLog(job.initialLog);
@@ -82,9 +85,12 @@ const ActiveJob: React.FC = () => {
     `Today, ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
 
   const startJob = () => {
-    setStarted(true);
-    toast.success("Job started", {
-      description: "Day 1 has begun. Log your work when the day is done.",
+    if (starting) return;
+    runStart(() => {
+      setStarted(true);
+      toast.success("Job started", {
+        description: "Day 1 has begun. Log your work when the day is done.",
+      });
     });
   };
 
@@ -104,20 +110,22 @@ const ActiveJob: React.FC = () => {
     const text = note.trim();
     if (!text) return;
 
-    if (editingId) {
-      setLog((prev) => prev.map((e) => (e.id === editingId ? { ...e, note: text, time: nowLabel() } : e)));
-      toast.success("Log entry updated");
-    } else {
-      setLog((prev) => [
-        // lock all previous days once a new day is logged
-        ...prev.map((e) => ({ ...e, locked: true })),
-        { id: String(Date.now()), day: prev.length + 1, note: text, time: nowLabel(), locked: false },
-      ]);
-      toast.success(`Day ${log.length + 1} marked complete`);
-    }
-    setSheetOpen(false);
-    setNote("");
-    setEditingId(null);
+    runSaveLog(() => {
+      if (editingId) {
+        setLog((prev) => prev.map((e) => (e.id === editingId ? { ...e, note: text, time: nowLabel() } : e)));
+        toast.success("Log entry updated");
+      } else {
+        setLog((prev) => [
+          // lock all previous days once a new day is logged
+          ...prev.map((e) => ({ ...e, locked: true })),
+          { id: String(Date.now()), day: prev.length + 1, note: text, time: nowLabel(), locked: false },
+        ]);
+        toast.success(`Day ${log.length + 1} marked complete`);
+      }
+      setSheetOpen(false);
+      setNote("");
+      setEditingId(null);
+    });
   };
 
   return (
@@ -205,8 +213,8 @@ const ActiveJob: React.FC = () => {
         </AppCard>
 
         {!started ? (
-          <AppButton onClick={startJob}>
-            <Play size={18} /> Start job
+          <AppButton onClick={startJob} loading={starting}>
+            {starting ? "Starting" : "Start job"}
           </AppButton>
         ) : (
           <AppButton variant="success" onClick={openNew} disabled={jobFinished}>
@@ -234,8 +242,8 @@ const ActiveJob: React.FC = () => {
               placeholder="What did you complete today?"
               className="w-full border-2 border-border rounded-xl px-4 py-3 bg-background text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors resize-none"
             />
-            <AppButton variant="success" onClick={save} disabled={!note.trim()}>
-              {editingId ? "Save correction" : "Mark day complete"}
+            <AppButton variant="success" onClick={save} loading={savingLog} disabled={!note.trim()}>
+              {savingLog ? "Saving" : editingId ? "Save correction" : "Mark day complete"}
             </AppButton>
           </div>
         </div>
