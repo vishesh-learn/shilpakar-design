@@ -5,6 +5,7 @@ import ScreenHeader from "@/components/ScreenHeader";
 import AppButton from "@/components/AppButton";
 import AppCard from "@/components/AppCard";
 import BottomNav from "@/components/BottomNav";
+import { useSimulatedAction } from "@/hooks/useSimulatedLoading";
 import { MapPin, Calendar, IndianRupee, Clock, User, MailCheck } from "lucide-react";
 
 const JobDetails: React.FC = () => {
@@ -12,10 +13,16 @@ const JobDetails: React.FC = () => {
   const { id } = useParams();
   const isInvitation = id?.startsWith("invitation-") ?? false;
   const [applied, setApplied] = useState(false);
+  const [applying, runApply] = useSimulatedAction(900);
+  const [accepting, runAccept] = useSimulatedAction(900);
+  const [declining, runDecline] = useSimulatedAction(900);
 
   const handleApply = () => {
-    setApplied(true);
-    toast.success("Application sent", { description: "The client can now review your application." });
+    if (applied || applying) return;
+    runApply(() => {
+      setApplied(true);
+      toast.success("Application sent", { description: "The client can now review your application." });
+    });
   };
 
   return (
@@ -80,11 +87,20 @@ const JobDetails: React.FC = () => {
       <div className="px-5 pb-24 flex gap-3">
         {isInvitation ? (
           <>
-            <AppButton variant="outline" onClick={() => { toast("Invitation declined"); navigate("/worker/jobs?tab=invitations"); }} fullWidth>Decline</AppButton>
-            <AppButton onClick={() => { toast.success("Invitation accepted"); navigate("/worker/active-job"); }} fullWidth>Accept invitation</AppButton>
+            <AppButton
+              variant="outline"
+              loading={declining}
+              onClick={() => runDecline(() => { toast("Invitation declined"); navigate("/worker/jobs?tab=invitations"); })}
+              fullWidth
+            >
+              {declining ? "Declining" : "Decline"}
+            </AppButton>
+            <AppButton loading={accepting} onClick={() => runAccept(() => { toast.success("Invitation accepted"); navigate("/worker/active-job"); })} fullWidth>
+              {accepting ? "Accepting" : "Accept invitation"}
+            </AppButton>
           </>
         ) : (
-          <AppButton onClick={handleApply} disabled={applied} fullWidth>
+          <AppButton onClick={handleApply} loading={applying} disabled={applied} fullWidth>
             <MailCheck size={18} /> {applied ? "Application sent" : "Apply for this job"}
           </AppButton>
         )}
