@@ -5,7 +5,7 @@ import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import BottomNav from "@/components/BottomNav";
 import { useSimulatedAction } from "@/hooks/useSimulatedLoading";
-import { MapPin, Phone, Clock, CheckCircle, Pencil, Lock, X, CalendarDays, Play } from "lucide-react";
+import { MapPin, Phone, Clock, CheckCircle, Pencil, Lock, X, CalendarDays } from "lucide-react";
 import { toast } from "sonner";
 import { JobStatus } from "@/lib/jobStatus";
 
