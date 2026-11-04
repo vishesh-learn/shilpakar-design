@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppButton from "@/components/AppButton";
 import FieldError, { triggerShake } from "@/components/FieldError";
+import { useSimulatedAction } from "@/hooks/useSimulatedLoading";
 import { Briefcase, MapPin, IndianRupee, Calendar, FileText, UserCheck, X } from "lucide-react";
 
 const jobTypes = ["Carpenter", "Electrician", "Plumber", "Mason", "Helper", "Painter"];
@@ -31,6 +32,8 @@ const PostJob: React.FC = () => {
   const [errors, setErrors] = useState<Errors>({});
   const [shake, setShake] = useState(false);
 
+  const [submitting, runSubmit] = useSimulatedAction();
+
   const handleSubmit = () => {
     const next: Errors = {};
     if (!title.trim()) next.title = "Enter a job title";
@@ -47,15 +50,17 @@ const PostJob: React.FC = () => {
       triggerShake(setShake);
       return;
     }
-    if (invitee) {
-      toast.success(`Hire request sent to ${invitee.name}`, {
-        description: "You'll be notified once they accept.",
-      });
-      navigate("/client/dashboard");
-    } else {
-      toast.success("Job posted successfully");
-      navigate("/client/workers");
-    }
+    runSubmit(() => {
+      if (invitee) {
+        toast.success(`Hire request sent to ${invitee.name}`, {
+          description: "You'll be notified once they accept.",
+        });
+        navigate("/client/dashboard");
+      } else {
+        toast.success("Job posted successfully");
+        navigate("/client/workers");
+      }
+    });
   };
 
   const wageInput = (
@@ -199,8 +204,8 @@ const PostJob: React.FC = () => {
       </div>
 
       <div className="px-5 pb-8">
-        <AppButton onClick={handleSubmit}>
-          {invitee ? "Send hire request" : "Post Job"}
+        <AppButton onClick={handleSubmit} loading={submitting}>
+          {submitting ? (invitee ? "Sending" : "Posting") : invitee ? "Send hire request" : "Post Job"}
         </AppButton>
       </div>
     </div>
