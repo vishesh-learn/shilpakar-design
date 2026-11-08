@@ -2,3 +2,5 @@
 - [x] Add worker apply/accept/decline actions for the two connection paths.
 - [x] Add client application review from unassigned job details.
 - [x] Show a freshly assigned worker job with a "Start job" action before day logging.
+- [ ] Add worker postpaid billing: ₹49 per month, seven-day grace period, and mock payment.
+- [ ] Restrict worker listings and job applications when billing is overdue; preserve invitation and acceptance access.
