@@ -1,21 +1,31 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ScreenHeader from "@/components/ScreenHeader";
 import AppCard from "@/components/AppCard";
 import AppButton from "@/components/AppButton";
 import { SkeletonProfile } from "@/components/Skeleton";
 import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
 import { User, MapPin, Star, Hammer, Phone, Briefcase } from "lucide-react";
+import { getWorkerAccess, loadWorkerBillingRecord } from "@/lib/workerBilling";
 
 const WorkerProfileView: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { id } = useParams();
   const loading = useSimulatedLoading();
+  const workerAccess = getWorkerAccess(loadWorkerBillingRecord());
+  const entryContext = location.state as { foundByContact?: boolean; inviteMode?: boolean } | null;
+  const canViewThisProfile = id !== "1" || workerAccess.canBeListed || Boolean(entryContext?.foundByContact || entryContext?.inviteMode);
 
   return (
     <div className="mobile-container bg-background min-h-screen flex flex-col">
       <ScreenHeader title="Worker Profile" />
       <div className="flex-1 px-5 py-6 space-y-4 animate-fade-in">
-        {loading ? (
+        {!canViewThisProfile ? (
+          <div className="border-l-4 border-warning bg-accent p-4 text-sm text-accent-foreground" role="status">
+            This worker is not publicly listed. Search using their exact phone number or email, or open a job invitation.
+          </div>
+        ) : loading ? (
           <SkeletonProfile />
         ) : (
           <>
@@ -82,7 +92,7 @@ const WorkerProfileView: React.FC = () => {
         )}
       </div>
 
-      <div className="px-5 pb-8">
+      {canViewThisProfile && <div className="px-5 pb-8">
         <AppButton
           fullWidth
           onClick={() =>
@@ -93,7 +103,7 @@ const WorkerProfileView: React.FC = () => {
         >
           Hire Now
         </AppButton>
-      </div>
+      </div>}
     </div>
   );
 };

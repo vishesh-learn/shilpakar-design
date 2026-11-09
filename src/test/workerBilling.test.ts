@@ -21,7 +21,7 @@ describe("worker postpaid billing rules", () => {
 
   it("allows the seven-day grace period, then pauses paid services", () => {
     expect(WORKER_GRACE_PERIOD_DAYS).toBe(7);
-    const graceAccess = getWorkerAccess(record, new Date(2026, 1, 7, 23, 59, 59));
+    const graceAccess = getWorkerAccess(record, new Date(2026, 1, 7, 23, 59, 59, 999));
     expect(graceAccess.canApplyForJobs).toBe(true);
     const overdueAccess = getWorkerAccess(record, new Date(2026, 1, 8, 0, 0, 0));
     expect(overdueAccess.canApplyForJobs).toBe(false);

@@ -68,7 +68,7 @@ export const getWorkerBills = (record: WorkerBillingRecord, now = new Date()): W
     .sort()
     .map((month) => {
       const [year, monthNumber] = month.split("-").map(Number);
-      const dueDate = new Date(year, monthNumber, WORKER_GRACE_PERIOD_DAYS, 23, 59, 59, 999);
+      const dueDate = new Date(year, monthNumber, WORKER_GRACE_PERIOD_DAYS - 1, 23, 59, 59, 999);
       const paid = record.paidMonths.includes(month);
       return { month, dueDate, paid, overdue: !paid && now.getTime() > dueDate.getTime() };
     });
@@ -101,10 +101,15 @@ export const canShowWorkerInClientDirectory = (
   if (!query) return false;
 
   const normalizedPhoneQuery = query.replace(/\D/g, "");
-  const matchesEmail = options.email.trim().toLowerCase() === query;
-  const matchesPhone = normalizedPhoneQuery.length > 0 &&
-    options.phone.replace(/\D/g, "") === normalizedPhoneQuery;
-  return matchesEmail || matchesPhone;
+  return isExactWorkerContactSearch(query, options.email, options.phone, normalizedPhoneQuery);
+};
+
+export const isExactWorkerContactSearch = (query: string, email: string, phone: string, normalizedPhoneQuery?: string): boolean => {
+  const normalizedQuery = query.trim().toLowerCase();
+  const phoneQuery = normalizedPhoneQuery ?? normalizedQuery.replace(/\D/g, "");
+  return email.trim().toLowerCase() === normalizedQuery || (
+    phoneQuery.length > 0 && phone.replace(/\D/g, "") === phoneQuery
+  );
 };
 
 export const markWorkerBillPaid = (record: WorkerBillingRecord, month: string): WorkerBillingRecord => ({

@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import {
   canShowWorkerInClientDirectory,
   getWorkerAccess,
+  isExactWorkerContactSearch,
   loadWorkerBillingRecord,
 } from "@/lib/workerBilling";
 
@@ -114,7 +115,12 @@ const WorkerList: React.FC = () => {
         ) : visibleWorkers.map((w) => {
           const isInvited = invited.includes(w.id);
           return (
-            <AppCard key={w.id} onClick={() => navigate(`/client/worker/${w.id}`)}>
+            <AppCard key={w.id} onClick={() => navigate(`/client/worker/${w.id}`, {
+              state: {
+                foundByContact: isExactWorkerContactSearch(query, w.email, w.phone),
+                inviteMode: Boolean(inviteJob),
+              },
+            })}>
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
                   <span className="text-primary font-bold text-lg">{w.name.split(" ").map(n => n[0]).join("")}</span>
