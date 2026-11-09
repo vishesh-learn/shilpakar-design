@@ -7,6 +7,7 @@ import { Star, MapPin, Clock, CheckCircle, ChevronRight, IndianRupee, CalendarDa
 import { JobStatus, getJobStatusLabel, type JobStatusId } from "@/lib/jobStatus";
 import { SkeletonList } from "@/components/Skeleton";
 import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
+import { getWorkerAccess, loadWorkerBillingRecord } from "@/lib/workerBilling";
 
 const activeJobs: { id: string; title: string; client: string; location: string; status: JobStatusId; progress: string; path: string }[] = [
   { id: "1", title: "Electrical Wiring", client: "Anil Sharma", location: "Andheri West, Mumbai", status: JobStatus.inProgress.id, progress: "Day 2 of 3", path: "/worker/active-job" },
@@ -55,6 +56,7 @@ const WorkerDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [available, setAvailable] = useState(true);
   const loading = useSimulatedLoading();
+  const workerAccess = getWorkerAccess(loadWorkerBillingRecord());
 
   return (
     <div className="mobile-container bg-background min-h-screen pb-24">
@@ -78,14 +80,17 @@ const WorkerDashboard: React.FC = () => {
           <div>
             <p className="text-primary-foreground font-semibold">Availability</p>
             <p className="text-primary-foreground/70 text-sm">
-              {available ? "You are visible to clients" : "You are hidden"}
+              {!workerAccess.canBeListed
+                ? "Your listing is paused until the monthly bill is paid"
+                : available ? "You are visible to clients" : "You are hidden"}
             </p>
           </div>
           <label className="relative inline-flex items-center cursor-pointer select-none group focus-within:outline-none">
             <input
               type="checkbox"
               className="sr-only peer"
-              checked={available}
+              checked={available && workerAccess.canBeListed}
+              disabled={!workerAccess.canBeListed}
               onChange={() => setAvailable(!available)}
             />
             <div className="w-16 h-9 bg-primary-foreground/30 rounded-full transition-all duration-300 ease-in-out peer-checked:bg-success shadow-[inset_0_2px_4px_rgba(0,0,0,0.08)] group-hover:opacity-90"></div>
@@ -95,6 +100,15 @@ const WorkerDashboard: React.FC = () => {
             <div className="absolute -inset-1.5 rounded-full border-2 border-transparent peer-focus-visible:border-success/30 transition-all"></div>
           </label>
         </AppCard>
+        {!workerAccess.canBeListed && (
+          <button
+            type="button"
+            onClick={() => navigate("/worker/billing")}
+            className="w-full border-l-4 border-warning bg-accent px-4 py-3 text-left text-sm font-medium text-accent-foreground"
+          >
+            Monthly bill overdue. Pay ₹49 to restore your listing and job applications.
+          </button>
+        )}
       </div>
 
       <div className="px-5 pt-6 space-y-6">

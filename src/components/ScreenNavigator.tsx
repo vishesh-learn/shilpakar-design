@@ -24,6 +24,7 @@ const screens: { group: string; items: { label: string; path: string }[] }[] = [
       { label: "Active Job (new)", path: "/worker/active-job/new" },
 
       { label: "Earnings", path: "/worker/earnings" },
+      { label: "Monthly Bill", path: "/worker/billing" },
       { label: "Profile", path: "/worker/profile" },
     ],
   },

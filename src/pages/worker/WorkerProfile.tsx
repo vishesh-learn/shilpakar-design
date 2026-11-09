@@ -86,6 +86,7 @@ const WorkerProfile: React.FC = () => {
 
 
         <AppButton variant="outline" onClick={() => navigate("/worker/edit-profile")}>Edit Profile</AppButton>
+        <AppButton variant="outline" onClick={() => navigate("/worker/billing")}>Monthly bill & access</AppButton>
         <AppButton variant="ghost" className="text-destructive" onClick={handleLogout}>
           <LogOut size={18} /> Logout
         </AppButton>
