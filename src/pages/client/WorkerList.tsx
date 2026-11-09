@@ -45,6 +45,7 @@ const WorkerList: React.FC = () => {
         : { ...overdueWorkerAccess, canBeListed: true };
       return canShowWorkerInClientDirectory(access, {
         query,
+        name: worker.name,
         email: worker.email,
         phone: worker.phone,
         inviteMode: Boolean(inviteJob),

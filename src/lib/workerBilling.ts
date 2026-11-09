@@ -92,11 +92,14 @@ export const getWorkerAccess = (record: WorkerBillingRecord, now = new Date()): 
 
 export const canShowWorkerInClientDirectory = (
   access: WorkerAccess,
-  options: { query: string; email: string; phone: string; inviteMode: boolean },
+  options: { query: string; name: string; email: string; phone: string; inviteMode: boolean },
 ): boolean => {
-  if (options.inviteMode || access.canBeListed) return true;
-
   const query = options.query.trim().toLowerCase();
+  if (options.inviteMode) return true;
+  if (access.canBeListed) return !query || options.name.toLowerCase().includes(query) ||
+    options.email.toLowerCase().includes(query) || options.phone.toLowerCase().includes(query);
+  if (!query) return false;
+
   const normalizedPhoneQuery = query.replace(/\D/g, "");
   const matchesEmail = options.email.trim().toLowerCase() === query;
   const matchesPhone = normalizedPhoneQuery.length > 0 &&

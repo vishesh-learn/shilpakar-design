@@ -4,6 +4,7 @@ Form and OTP errors use the shared pattern from src/components/FieldError.tsx: b
 Login/OTP demo verification code is 1234 (DEMO_OTP in LoginScreen.tsx) — replace with real backend verification when connected.
 Data screens (dashboards, lists, profiles, earnings) show skeleton placeholders from src/components/Skeleton.tsx driven by useSimulatedLoading() from src/hooks/useSimulatedLoading.ts; mock data loads instantly, so the hook's short delay simulates the wait — swap the hook for real loading state when a backend is connected.
 Submit/save actions (send OTP, verify, post job, save profile, rate, apply/invite/accept/decline, start job, log day) show a loading state via the `loading` prop on AppButton (inline spinner, button disabled, aria-busy) driven by useSimulatedAction() from src/hooks/useSimulatedLoading.ts; keep validation before `run(...)` so errors never spin — swap the simulated delay for the real API call when a backend is connected.
+Worker billing eligibility is centralized in src/lib/workerBilling.ts and enforced at paid-service actions, while invitation handling and assigned work remain available.
 
 
 
