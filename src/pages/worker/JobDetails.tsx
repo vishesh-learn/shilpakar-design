@@ -7,17 +7,23 @@ import AppCard from "@/components/AppCard";
 import BottomNav from "@/components/BottomNav";
 import { useSimulatedAction } from "@/hooks/useSimulatedLoading";
 import { MapPin, Calendar, IndianRupee, Clock, User, MailCheck } from "lucide-react";
+import { getWorkerAccess, loadWorkerBillingRecord } from "@/lib/workerBilling";
 
 const JobDetails: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const isInvitation = id?.startsWith("invitation-") ?? false;
+  const canApplyForJobs = getWorkerAccess(loadWorkerBillingRecord()).canApplyForJobs;
   const [applied, setApplied] = useState(false);
   const [applying, runApply] = useSimulatedAction(900);
   const [accepting, runAccept] = useSimulatedAction(900);
   const [declining, runDecline] = useSimulatedAction(900);
 
   const handleApply = () => {
+    if (!canApplyForJobs) {
+      toast.error("Payment needed to apply", { description: "Pay your monthly bill to continue applying for jobs." });
+      return;
+    }
     if (applied || applying) return;
     runApply(() => {
       setApplied(true);
@@ -100,9 +106,16 @@ const JobDetails: React.FC = () => {
             </AppButton>
           </>
         ) : (
-          <AppButton onClick={handleApply} loading={applying} disabled={applied} fullWidth>
-            <MailCheck size={18} /> {applied ? "Application sent" : "Apply for this job"}
-          </AppButton>
+          canApplyForJobs ? (
+            <AppButton onClick={handleApply} loading={applying} disabled={applied} fullWidth>
+              <MailCheck size={18} /> {applied ? "Application sent" : "Apply for this job"}
+            </AppButton>
+          ) : (
+            <div className="w-full space-y-2">
+              <p className="text-center text-sm text-muted-foreground">Your monthly bill is overdue. Invitations are still available.</p>
+              <AppButton onClick={() => navigate("/worker/billing")} fullWidth>View monthly bill</AppButton>
+            </div>
+          )
         )}
       </div>
       <BottomNav type="worker" />

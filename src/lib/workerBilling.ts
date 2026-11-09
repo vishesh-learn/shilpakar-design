@@ -52,7 +52,11 @@ export const loadWorkerBillingRecord = (now = new Date()): WorkerBillingRecord =
   }
 
   const initial = defaultBillingRecord(now);
-  localStorage.setItem(WORKER_BILLING_STORAGE_KEY, JSON.stringify(initial));
+  try {
+    localStorage.setItem(WORKER_BILLING_STORAGE_KEY, JSON.stringify(initial));
+  } catch {
+    // Billing rules still work for this visit if browser storage is unavailable.
+  }
   return initial;
 };
 
@@ -93,9 +97,11 @@ export const canShowWorkerInClientDirectory = (
   if (options.inviteMode || access.canBeListed) return true;
 
   const query = options.query.trim().toLowerCase();
-  return Boolean(query && [options.email, options.phone].some((contact) =>
-    contact.toLowerCase().includes(query),
-  ));
+  const normalizedPhoneQuery = query.replace(/\D/g, "");
+  const matchesEmail = options.email.trim().toLowerCase() === query;
+  const matchesPhone = normalizedPhoneQuery.length > 0 &&
+    options.phone.replace(/\D/g, "") === normalizedPhoneQuery;
+  return matchesEmail || matchesPhone;
 };
 
 export const markWorkerBillPaid = (record: WorkerBillingRecord, month: string): WorkerBillingRecord => ({

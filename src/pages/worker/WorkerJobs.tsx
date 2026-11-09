@@ -6,6 +6,7 @@ import BottomNav from "@/components/BottomNav";
 import { SkeletonList } from "@/components/Skeleton";
 import { useSimulatedLoading } from "@/hooks/useSimulatedLoading";
 import { MapPin, Clock, IndianRupee } from "lucide-react";
+import { getWorkerAccess, loadWorkerBillingRecord } from "@/lib/workerBilling";
 
 const jobs = [
   { id: 1, title: "Electrical Wiring", client: "Anil Sharma", location: "Andheri West", wage: "₹800/day", time: "2 hours ago", type: "Electrician" },
@@ -25,11 +26,21 @@ const WorkerJobs: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const showInvitations = searchParams.get("tab") === "invitations";
   const visibleJobs = showInvitations ? invitations : jobs;
+  const overdue = getWorkerAccess(loadWorkerBillingRecord()).overdueBills.length > 0;
 
   return (
     <div className="mobile-container bg-background min-h-screen pb-24">
       <ScreenHeader title="Jobs" showBack={false} />
       <div className="px-5 pt-4">
+        {overdue && !showInvitations && (
+          <button
+            type="button"
+            onClick={() => navigate("/worker/billing")}
+            className="mb-4 w-full border-l-4 border-warning bg-accent px-4 py-3 text-left text-sm text-accent-foreground"
+          >
+            Monthly bill overdue. Pay to apply for jobs.
+          </button>
+        )}
         <div className="grid grid-cols-2 rounded-xl bg-muted p-1" role="tablist" aria-label="Job lists">
           <button
             role="tab"

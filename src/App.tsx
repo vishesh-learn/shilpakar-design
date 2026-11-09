@@ -17,6 +17,7 @@ import WorkerProfile from "./pages/worker/WorkerProfile";
 import WorkerEditProfile from "./pages/worker/WorkerEditProfile";
 import WorkerHistory from "./pages/worker/WorkerHistory";
 import WorkerHistoryDetails from "./pages/worker/WorkerHistoryDetails";
+import WorkerBilling from "./pages/worker/WorkerBilling";
 import ClientSetup from "./pages/client/ClientSetup";
 import ClientDashboard from "./pages/client/ClientDashboard";
 import PostJob from "./pages/client/PostJob";
@@ -61,6 +62,7 @@ const App = () => (
           <Route path="/worker/active-job/:id" element={<ActiveJob />} />
 
           <Route path="/worker/earnings" element={<EarningsScreen />} />
+          <Route path="/worker/billing" element={<WorkerBilling />} />
           <Route path="/worker/profile" element={<WorkerProfile />} />
           <Route path="/worker/edit-profile" element={<WorkerEditProfile />} />
           <Route path="/worker/history" element={<WorkerHistory />} />
