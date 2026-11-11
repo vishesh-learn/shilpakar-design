@@ -32,7 +32,6 @@ const WorkerBilling: React.FC = () => {
     setPayingMonth(month);
     runPayment(() => {
       const updatedRecord = markWorkerBillPaid(record, month);
-      setRecord(updatedRecord);
       try {
         localStorage.setItem(WORKER_BILLING_STORAGE_KEY, JSON.stringify(updatedRecord));
       } catch {
@@ -40,6 +39,7 @@ const WorkerBilling: React.FC = () => {
         setPayingMonth(null);
         return;
       }
+      setRecord(updatedRecord);
       setPayingMonth(null);
       toast.success("Demo payment recorded", { description: "No real money was charged." });
     });
